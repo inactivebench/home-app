@@ -1,33 +1,18 @@
-import { useEffect, useState } from "react";
-
-// import axios from "axios";
-
-const url = "/api";
+import React, { useEffect, useState } from "react";
 
 const App = () => {
-  const [backUser, setbackUser] = useState({});
-
-  const fetchData = async () => {
-    try {
-      const response = await axios("/api");
-      const data = response.data;
-      console.log(data);
-    } catch (error) {
-      console.log(error.response);
-    }
-  };
+  const [item, setItem] = useState("{}");
 
   useEffect(() => {
-    fetchData();
-    setbackUser(data);
+    fetch("/api")
+      .then((response) => response.json())
+      .then((data) => {
+        setItem(data);
+      });
   }, []);
-
   return (
     <div>
-      <h2>App</h2>;
-      {backUser.users.map((user, i) => {
-        return <h2 key={i}>{user}</h2>;
-      })}
+      <h2>App</h2>
     </div>
   );
 };
