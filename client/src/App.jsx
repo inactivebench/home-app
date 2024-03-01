@@ -13,7 +13,7 @@ const App = () => {
   }, []);
   return (
     <div>
-      <h2>App</h2>
+      <h2>{item.message}</h2>
     </div>
   );
 };
