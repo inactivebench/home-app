@@ -4,9 +4,10 @@ const App = () => {
   const [item, setItem] = useState("{}");
 
   useEffect(() => {
-    fetch("/api")
+    fetch("http://localhost:5000/api")
       .then((response) => response.json())
       .then((data) => {
+        console.log(data)
         setItem(data);
       });
   }, []);
