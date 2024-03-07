@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
+import Signup from "./login-signup/Signup";
+import Signin from "./login-signup/Signin";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+
+
 
 const App = () => {
-  const [item, setItem] = useState("{}");
-
-  useEffect(() => {
-    fetch("http://localhost:5000/api")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data)
-        setItem(data);
-      });
-  }, []);
   return (
-    <div>
-      <h2>{item.message}</h2>
-    </div>
+   <BrowserRouter>
+   <Routes>
+    <Route path='/' element={<Home/>}  />
+    <Route path='signin' element={<Signin/>}  />
+    <Route path='signup' element={<Signup/>}  />
+   </Routes>
+   </BrowserRouter>
   );
 };
 export default App;
