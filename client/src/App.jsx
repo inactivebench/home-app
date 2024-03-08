@@ -7,13 +7,13 @@ const App = () => {
     fetch("http://localhost:5000/api")
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
+        console.log(data);
         setItem(data);
       });
   }, []);
   return (
     <div>
-      <h2>App</h2>
+      <h2>{item.message}</h2>
     </div>
   );
 };
