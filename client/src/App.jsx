@@ -1,4 +1,8 @@
 import React, { useEffect, useState } from "react";
+import Signup from "./login-signup/Signup";
+import Signin from "./login-signup/Signin";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
 
 const App = () => {
   const [item, setItem] = useState("{}");
@@ -13,7 +17,7 @@ const App = () => {
   }, []);
   return (
     <div>
-      <h2>{item.message}</h2>
+      <h2>App</h2>
     </div>
   );
 };
