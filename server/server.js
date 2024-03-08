@@ -2,7 +2,8 @@ const express = require("express");
 const mysql = require('mysql2')
 const cors = require('cors')
 const app = express();
-
+// Middleware to parse JSON bodies
+app.use(express.json());
 // app.use(
 //   cors({
 //     origin : "http://localhost:5173",
@@ -46,12 +47,13 @@ console.log("mysql connected");
  // api route
 
   app.post('/signup', (req, res)=>{
+    
     let user = {
-    customer_fname : req.customer_fname, 
-    customer_lname: req.customer_lname,
-    customer_email: req.customer_email, 
-    password: req.password, 
-    phone_number: req.phone_number 
+    customer_fname : req.body.customer_fname, 
+    customer_lname: req.body.customer_lname,
+    customer_email: req.body.customer_email, 
+    password: req.body.password, 
+    phone_number: req.body.phone_number 
   }
     let sql = ' INSERT INTO customers SET ? ';
     let query = db.query(sql, user, (err, result)=>{
