@@ -50,9 +50,9 @@ form {
     padding-bottom: 1rem;
 }
 
-a, a:visited {
+/* a, a:visited {
     color: #fff;
-}
+} */
 
 input[type="text"],
 input[type="password"],
@@ -118,7 +118,35 @@ button {
     display: inline-block;
 }
 
-.link{
+.link {
     color: blue;
     font-size: 1rem;
+}
+.logout{
+    background-color: orangered;
+    color: white;
+    font-size: 1rem;
+    border-radius: 1rem;
+    padding: .5rem;
+}
+.logo{
+   max-width: 100%;
+   aspect-ratio: 1;
+}
+.logo__link{
+    width: 3.5em; ;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem;
+}
+
+.flex{
+    display: flex;
+    gap: 1rem;
+}
+.img {
+    max-width: 100%;
 }
