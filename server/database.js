@@ -67,3 +67,42 @@ app.get('/createdb', (req, res)=>{
       res.send('user created ')
     })  
   })
+
+
+
+    // select single user
+    app.get('/getuser/:id', (req, res)=>{
+      let sql =  `SELECT * FROM customers WHERE customer_id = ${req.params.id} `;
+      let query = db.query(sql, (err, result)=>{
+        if(err){
+          throw err
+        }
+        console.log(result)
+        res.send(result)
+      })  
+    })
+    
+    // update user
+    app.get('/updateuser/:id', (req, res)=>{
+      let newPassword = 'jakom543'
+      let sql =  `UPDATE customers SET password = '${newPassword}' WHERE customer_id = ${req.params.id} `;
+      let query = db.query(sql, (err, result)=>{
+        if(err){
+          throw err
+        }
+        console.log(result)
+        res.send(result)
+      })  
+    })
+    
+    //delete post
+    app.get('/deletepost/:id', (req, res)=>{
+      let sql =  `DELETE FROM posts WHERE id = ${req.params.id} `;
+      let query = db.query(sql, (err, result)=>{
+        if(err){
+          throw err
+        }
+        console.log(result)
+        res.send('post deleted... ')
+      })  
+    })

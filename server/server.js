@@ -1,5 +1,8 @@
 const express = require("express");
-const mysql = require('mysql2')
+const mysql = require('mysql2');
+const axios = require('axios');
+const cheerio = require('cheerio');
+
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
@@ -136,14 +139,6 @@ console.log("mysql connected");
 })
 
 
-
-
-
-
-
-
-
-
   // select users
   app.get('/getusers', (req, res)=>{
     let sql = ' SELECT * FROM customers ';
@@ -155,42 +150,75 @@ console.log("mysql connected");
       res.send(result)
     })  
   })
-  // select single user
-  app.get('/getuser/:id', (req, res)=>{
-    let sql =  `SELECT * FROM customers WHERE customer_id = ${req.params.id} `;
-    let query = db.query(sql, (err, result)=>{
-      if(err){
-        throw err
-      }
-      console.log(result)
-      res.send(result)
-    })  
-  })
+
+
+
   
-  // update user
-  app.get('/updateuser/:id', (req, res)=>{
-    let newPassword = 'jakom543'
-    let sql =  `UPDATE customers SET password = '${newPassword}' WHERE customer_id = ${req.params.id} `;
-    let query = db.query(sql, (err, result)=>{
-      if(err){
+
+  // web scraping
+  const scrapeData = () => {
+    axios.get('https://www.pigiame.co.ke/houses-for-rent?q=Nairobi')
+      .then(response => {
+        const html = response.data
+        const $ = cheerio.load(html)
+        const listing = []
+        $('.listing-card', html).each(function(){
+        const title =  $(this).find('.listing-card__header__title').text()
+          const imgUrl = $(this).find('img').attr('src')
+          const price = $(this).find('.listing-card__price').text()
+         const location =  $(this).find('.listing-card__header__location').text()
+
+         listing.push({
+          title, 
+          imgUrl, 
+          price, 
+          location
+          })
+        })
+        console.log(listing);
+      })
+      .catch(err => {
         throw err
-      }
-      console.log(result)
-      res.send(result)
-    })  
-  })
+      })
+  }
+  // scrapeData()
+
+
+  // const scrapeData = () => {
+  //   axios.get('https://www.buyrentkenya.com/houses-for-rent/nairobi')
+  //     .then(response => {
+  //       const html = response.data
+  //       const $ = cheerio.load(html)
+  //       const listing = []
+  //       $('.listing-card', html).each(function(){
+  //       const title =  $(this).find('h2').text()
+  //         const imgUrl = $(this).find('a').attr('href')
+  //         const price = $(this).find('p').text()
+  //        const description =  $(this).find('h3').text()
+  //        const location =  $(this).find('p').text()
+  //        const bedroom =  $(this).find('span').text()
+  //       //  const bath =  $(this).find('span').attr('data-cy = "card-bath"').text()
+
+  //        listing.push({
+  //         title, 
+  //         imgUrl, 
+  //         price, 
+  //         description, 
+  //         location,
+  //          bedroom
+  //         })
+  //       })
+  //       console.log(listing);
+  //     })
+  //     .catch(err => {
+  //       throw err
+  //     })
+  // }
+  // scrapeData()
   
-  //delete post
-  app.get('/deletepost/:id', (req, res)=>{
-    let sql =  `DELETE FROM posts WHERE id = ${req.params.id} `;
-    let query = db.query(sql, (err, result)=>{
-      if(err){
-        throw err
-      }
-      console.log(result)
-      res.send('post deleted... ')
-    })  
-  })
+
+
+
 
 
 
