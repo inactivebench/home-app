@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require('mysql2');
 const axios = require('axios');
 const cheerio = require('cheerio');
+const puppeteer = require('puppeteer');
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
@@ -155,57 +156,24 @@ console.log("mysql connected");
 
   
 
-  // web scraping
-  const scrapeData = () => {
-    axios.get('https://www.pigiame.co.ke/houses-for-rent?q=Nairobi')
-      .then(response => {
-        const html = response.data
-        const $ = cheerio.load(html)
-        const listing = []
-        $('.listing-card', html).each(function(){
-        const title =  $(this).find('.listing-card__header__title').text()
-          const imgUrl = $(this).find('img').attr('src')
-          const price = $(this).find('.listing-card__price').text()
-         const location =  $(this).find('.listing-card__header__location').text()
-
-         listing.push({
-          title, 
-          imgUrl, 
-          price, 
-          location
-          })
-        })
-        console.log(listing);
-      })
-      .catch(err => {
-        throw err
-      })
-  }
-  // scrapeData()
-
-
+  // web scraping with cheerio
   // const scrapeData = () => {
-  //   axios.get('https://www.buyrentkenya.com/houses-for-rent/nairobi')
+  //   axios.get('https://www.pigiame.co.ke/houses-for-rent?q=Nairobi')
   //     .then(response => {
   //       const html = response.data
   //       const $ = cheerio.load(html)
   //       const listing = []
   //       $('.listing-card', html).each(function(){
-  //       const title =  $(this).find('h2').text()
-  //         const imgUrl = $(this).find('a').attr('href')
-  //         const price = $(this).find('p').text()
-  //        const description =  $(this).find('h3').text()
-  //        const location =  $(this).find('p').text()
-  //        const bedroom =  $(this).find('span').text()
-  //       //  const bath =  $(this).find('span').attr('data-cy = "card-bath"').text()
+  //       const title =  $(this).find('.listing-card__header__title').text()
+  //         const imgUrl = $(this).find('img').attr('src')
+  //         const price = $(this).find('.listing-card__price').text()
+  //        const location =  $(this).find('.listing-card__header__location').text()
 
   //        listing.push({
   //         title, 
   //         imgUrl, 
   //         price, 
-  //         description, 
-  //         location,
-  //          bedroom
+  //         location
   //         })
   //       })
   //       console.log(listing);
@@ -214,11 +182,53 @@ console.log("mysql connected");
   //       throw err
   //     })
   // }
-  // scrapeData()
+  // // scrapeData()
+
   
 
+  // Scrape data with puppeteer
+ async function scrapeData() {
+  try {
+    const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  //change navigation timeout
+  page.setDefaultNavigationTimeout(2*60*1000);
+  
+  await page.goto('https://www.buyrentkenya.com/houses-for-rent/nairobi');
 
 
+  const propertyListings = await page.$$eval('.listing-card div', async (listings, page) => {
+    const propertiesData = [];
+    for (const listing of listings) {
+        const propertyUrl = listing.querySelector('a').getAttribute('href');
+        console.log(propertyUrl);
+        const propertyPage = await page.goto(propertyUrl);
+        const title = await propertyPage.$eval('[data-cy="listing-heading"]', element => element.textContent);
+        const location = await propertyPage.$eval('[data-cy="listing-address"]', element => element.textContent);
+        const size = await propertyPage.$eval('span [aria-label="area"]', element => element.textContent);
+        const description = await propertyPage.$eval('[x-html="description"] div', element => element.textContent);
+        const price = await propertyPage.$eval('[aria-label="price"]', element => element.textContent);
+
+        // Scrape all images
+        const imageUrls = await propertyPage.$$eval('.swiper-wrapper > .swiper-slide > img', elements => {
+          return elements.map(img => img.getAttribute('src'));
+      });
+
+        propertiesData.push({ title, location, size, imageUrls, description, price });
+    }
+    console.log(propertiesData);
+    // return propertiesData;
+});
+
+  await browser?.close();
+  } catch (err) {
+    console.log(err);
+  }
+  
+ }
+
+scrapeData()
 
 
 
