@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Signup from "./login-signup/Signup";
-import Signin from "./login-signup/Signin";
+import Signup from "./pages/Signup";
+import Signin from "./pages/Signin";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 

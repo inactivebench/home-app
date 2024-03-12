@@ -3,6 +3,8 @@ import { faCheck, faTimes, faInfoCircle } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {Link} from 'react-router-dom'
 import axios from "axios";
+import logo from "../assets/home_bnw.svg"
+
 
 
 
@@ -113,16 +115,21 @@ const Signup = () => {
                     <h1>Success!</h1>
                     <p>
                     <Link to='/signin' className="link" >Sign In</Link>
-                        {/* <a href="#">Sign In</a> */}
                     </p>
                 </section>
             ) : (
-                <section>
+                <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                    <img className='mx-auto h-12 w-auto' src={logo} alt="logo" />
+                    <h1 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>Sign up to create your account</h1>
+                    </div>
+                    <div className="mt-10 p-8 border-2 rounded-lg sm:mx-auto sm:w-full sm:max-w-sm md:max-w-md">
+
+
                     <p ref={errRef} className={errMsg ? "errmsg" : "offscreen"} aria-live="assertive">{errMsg}</p>
-                    <h1>Signup</h1>
-                    <form onSubmit={handleSubmit}>
+                    <form className='space-y-6' onSubmit={handleSubmit}>
                       {/* {firstname} */}
-                        <label htmlFor="firstname">
+                        <label htmlFor="firstname" className='block text-sm font-medium leading-6 text-gray-900'>
                             First name:
                             <FontAwesomeIcon icon={faCheck} className={validFirstName ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validFirstName || !firstName ? "hide" : "invalid"} />
@@ -134,6 +141,7 @@ const Signup = () => {
                             autoComplete="off"
                             onChange={(e) => setFirstName(e.target.value)}
                             value={firstName}
+                            className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                             required
                             aria-invalid={validFirstName ? "false" : "true"}
                           
@@ -143,7 +151,7 @@ const Signup = () => {
                   
 
                     {/* {lastname} */}
-                    <label htmlFor="lastname">
+                    <label htmlFor="lastname" className='block text-sm font-medium leading-6 text-gray-900'>
                             Last name:
                             <FontAwesomeIcon icon={faCheck} className={validLastName ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validLastName || !lastName ? "hide" : "invalid"} />
@@ -154,6 +162,7 @@ const Signup = () => {
                             autoComplete="off"
                             onChange={(e) => setLastName(e.target.value)}
                             value={lastName}
+                            className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                             required
                             aria-invalid={validLastName ? "false" : "true"}
             
@@ -162,7 +171,7 @@ const Signup = () => {
                         />
                        
                     {/* {email} */}
-                    <label htmlFor="email">
+                    <label htmlFor="email" className='block text-sm font-medium leading-6 text-gray-900'>
                             Email:
                             <FontAwesomeIcon icon={faCheck} className={validEmail ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validEmail || !email ? "hide" : "invalid"} />
@@ -174,6 +183,7 @@ const Signup = () => {
                             autoComplete="off"
                             onChange={(e) => setEmail(e.target.value)}
                             value={email}
+                            className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                             required
                             aria-invalid={validEmail ? "false" : "true"}
             
@@ -186,7 +196,7 @@ const Signup = () => {
                         </p>
                     
                     {/* {phone number} */}
-                    <label htmlFor="contact">
+                    <label htmlFor="contact" className='block text-sm font-medium leading-6 text-gray-900'>
                            Contact:
                             <FontAwesomeIcon icon={faCheck} className={validContact ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validContact || !contact ? "hide" : "invalid"} />
@@ -198,6 +208,7 @@ const Signup = () => {
                             autoComplete="off"
                             onChange={(e) => setContact(e.target.value)}
                             value={contact}
+                            className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                             required
                             aria-invalid={validContact ? "false" : "true"}
                           
@@ -206,7 +217,7 @@ const Signup = () => {
                         />
                     {/* {password} */}
 
-                        <label htmlFor="password">
+                        <label htmlFor="password" className='block text-sm font-medium leading-6 text-gray-900'>
                             Password:
                             <FontAwesomeIcon icon={faCheck} className={validPwd ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validPwd || !pwd ? "hide" : "invalid"} />
@@ -216,6 +227,7 @@ const Signup = () => {
                             id="password"
                             onChange={(e) => setPwd(e.target.value)}
                             value={pwd}
+                            className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                             required
                             aria-invalid={validPwd ? "false" : "true"}
                             aria-describedby="pwdnote"
@@ -231,7 +243,7 @@ const Signup = () => {
 
                     {/* {confirm password} */}
 
-                        <label htmlFor="confirm_pwd">
+                        <label htmlFor="confirm_pwd" className='block text-sm font-medium leading-6 text-gray-900'>
                             Confirm Password:
                             <FontAwesomeIcon icon={faCheck} className={validMatch && matchPwd ? "valid" : "hide"} />
                             <FontAwesomeIcon icon={faTimes} className={validMatch || !matchPwd ? "hide" : "invalid"} />
@@ -241,6 +253,7 @@ const Signup = () => {
                             id="confirm_pwd"
                             onChange={(e) => setMatchPwd(e.target.value)}
                             value={matchPwd}
+                            className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                             required
                             aria-invalid={validMatch ? "false" : "true"}
                             aria-describedby="confirmnote"
@@ -252,16 +265,18 @@ const Signup = () => {
                             Must match the first password input field.
                         </p>
 
-                        <button disabled={!validFirstName || !validLastName || !validEmail || !validContact || !validPwd || !validMatch ? true : false}>Sign Up</button>
+                        <button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" disabled={!validFirstName || !validLastName || !validEmail || !validContact || !validPwd || !validMatch ? true : false}>
+                            Sign Up</button>
                     </form>
-                    <p>
-                        Already registered?<br />
-                        <span className="line">
-                            <Link to='/signin' className="link" >Sign In</Link>
+                    <p className='mt-10 text-center text-sm text-gray-500'>
+                        Already registered ?
+                        <span className="ml-2">
+                            <Link to='/signin' className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500" >Sign In</Link>
                             {/* <a href="#">Sign In</a> */}
                         </span>
                     </p>
-                </section>
+                    </div>
+                </div>
             )}
         </>
     )
