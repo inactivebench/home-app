@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import {Link} from 'react-router-dom'
 import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
+import Card from '../components/Card';
 
 const Home = () => {
  
@@ -21,7 +22,7 @@ const Home = () => {
       : 
       <button className='logout' onClick={handleLogout}>Logout</button>
     }
-    
+    <Card/>
     
   </div>
   )
