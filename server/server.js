@@ -151,13 +151,12 @@ app.get("/getusers", (req, res) => {
 });
 
 // web scraping with cheerio
-
+const firstUrl =
+  "https://www.privatepropertykenya.com/apartment-for-rent?search=Nairobi&bedroom=&min_price=&max_price=&button=&page=53";
 //link to each property listing
-const scrapePropertyLink = () => {
-  axios
-    .get(
-      "https://www.privatepropertykenya.com/property-for-rent?search=Nairobi&ptype=&bedroom=&min_price=&max_price=&button="
-    )
+async function rentalPropertyLinks(url) {
+  await axios
+    .get(url)
     .then((response) => {
       const html = response.data;
       const $ = cheerio.load(html);
@@ -171,14 +170,25 @@ const scrapePropertyLink = () => {
           listingUrl,
         });
       });
-      console.log(propertyLinks);
+      // console.log(propertyLinks);
       console.log(propertyLinks.length);
+      if (propertyLinks.length < 1) {
+        console.log(propertyLinks);
+        return propertyLinks;
+      } else {
+        // Go fetch the next page ?page=X+1
+        const nextPageNumber = parseInt(url.match(/page=(\d+)$/)[1], 10) + 1;
+        const nextUrl = `https://www.privatepropertykenya.com/apartment-for-rent?search=Nairobi&bedroom=&min_price=&max_price=&button=&page=${nextPageNumber}`;
+        propertyLinks.concat(rentalPropertyLinks(nextUrl));
+      }
+
+      //extract data from each property link
       propertyLinks.forEach((propertyLink) => {
-        let url = `https://www.privatepropertykenya.com${propertyLink.listingUrl}`;
+        let propertyUrl = `https://www.privatepropertykenya.com${propertyLink.listingUrl}`;
 
         const scrapePropertyData = () => {
           axios
-            .get(url)
+            .get(propertyUrl)
             .then((response) => {
               const html = response.data;
               const $ = cheerio.load(html);
@@ -213,78 +223,9 @@ const scrapePropertyLink = () => {
     .catch((err) => {
       throw err;
     });
-};
-scrapePropertyLink();
+}
 
-// Scrape data with puppeteer
-// async function scrapeData() {
-//   try {
-//     const browser = await puppeteer.launch();
-//     const page = await browser.newPage();
-
-//     //change navigation timeout
-//     page.setDefaultNavigationTimeout(2 * 60 * 1000);
-
-//     await page.goto("https://www.buyrentkenya.com/houses-for-rent/nairobi");
-
-//     const propertyListings = await page.$$eval(
-//       ".listing-card div",
-//       async (listings, page) => {
-//         const propertiesData = [];
-//         for (const listing of listings) {
-//           const propertyUrl = listing.querySelector("a").getAttribute("href");
-//           console.log(propertyUrl);
-//           const propertyPage = await page.goto(propertyUrl);
-//           const title = await propertyPage.$eval(
-//             '[data-cy="listing-heading"]',
-//             (element) => element.textContent
-//           );
-//           const location = await propertyPage.$eval(
-//             '[data-cy="listing-address"]',
-//             (element) => element.textContent
-//           );
-//           const size = await propertyPage.$eval(
-//             'span [aria-label="area"]',
-//             (element) => element.textContent
-//           );
-//           const description = await propertyPage.$eval(
-//             '[x-html="description"] div',
-//             (element) => element.textContent
-//           );
-//           const price = await propertyPage.$eval(
-//             '[aria-label="price"]',
-//             (element) => element.textContent
-//           );
-
-//           // Scrape all images
-//           const imageUrls = await propertyPage.$$eval(
-//             ".swiper-wrapper > .swiper-slide > img",
-//             (elements) => {
-//               return elements.map((img) => img.getAttribute("src"));
-//             }
-//           );
-
-//           propertiesData.push({
-//             title,
-//             location,
-//             size,
-//             imageUrls,
-//             description,
-//             price,
-//           });
-//         }
-//         console.log(propertiesData);
-//         // return propertiesData;
-//       }
-//     );
-
-//     await browser?.close();
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
-
-// scrapeData();
+rentalPropertyLinks(firstUrl);
 
 // test
 
