@@ -1,24 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
 
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 html {
-    font-family: 'Nunito', sans-serif;
-    font-size: 1rem;
-    color: #fff;
+  font-family: "Nunito", sans-serif;
+  font-size: 1rem;
+  color: #fff;
 }
 
 body {
-    min-height: 100vh;
-   
+  min-height: 100vh;
 }
-h1{
-    color: black;
-    font-size: 1.5rem;
+h1 {
+  color: black;
+  font-size: 1.5rem;
 }
 
 .App {
@@ -26,28 +25,28 @@ h1{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; 
+  min-height: 100vh;
   padding: 1rem 0.5rem;
 }
 
 section {
-    width: 100%;
-    max-width: 420px;
-    min-height: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    padding: 1rem;
-    margin: 0 auto;
-    background-color: rgba(0,0,0,0.4);
+  width: 100%;
+  max-width: 420px;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1rem;
+  margin: 0 auto;
+  background-color: rgba(0, 0, 0, 0.4);
 }
 
 form {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    flex-grow: 1;
-    padding-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex-grow: 1;
+  padding-bottom: 1rem;
 }
 
 /* a, a:visited {
@@ -58,95 +57,80 @@ input[type="text"],
 input[type="password"],
 button,
 textarea {
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 1rem;
   padding: 0.25rem;
   border-radius: 0.5rem;
 }
 
-label,
-button {
-  margin-top: 1rem;
-}
-
-button {
-  padding: 0.5rem;
-}
-
 .instructions {
-    font-size: 0.75rem;
-    border-radius: 0.5rem;
-    background: #000;
-    color: #fff;
-    padding: 0.25rem;
-    position: relative;
-    bottom: -10px;
+  font-size: 0.75rem;
+  border-radius: 0.5rem;
+  background: #000;
+  color: #fff;
+  padding: 0.25rem;
+  position: relative;
+  bottom: -10px;
 }
 
 .instructions > svg {
-    margin-right: 0.25rem;
+  margin-right: 0.25rem;
 }
 
 .offscreen {
-    position: absolute;
-    left: -9999px;
+  position: absolute;
+  left: -9999px;
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 
 .valid {
-    color: limegreen;
-    margin-left: 0.25rem;
+  color: limegreen;
+  margin-left: 0.25rem;
 }
 
 .invalid {
-    color: red;
-    margin-left: 0.25rem;
+  color: red;
+  margin-left: 0.25rem;
 }
 
 .errmsg {
-    background-color: lightpink;
-    color: firebrick;
-    font-weight: bold;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
+  background-color: lightpink;
+  color: firebrick;
+  font-weight: bold;
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .line {
-    display: inline-block;
+  display: inline-block;
 }
 
 .link {
-    color: blue;
-    font-size: 1rem;
+  color: blue;
+  font-size: 1rem;
 }
-.logout{
-    background-color: orangered;
-    color: white;
-    font-size: 1rem;
-    border-radius: 1rem;
-    padding: .5rem;
+.logout {
+  background-color: orangered;
+  color: white;
+  font-size: 1rem;
+  border-radius: 1rem;
+  padding: 0.5rem;
 }
-.logo{
-   max-width: 100%;
-   aspect-ratio: 1;
+.logo {
+  max-width: 100%;
+  aspect-ratio: 1;
 }
-.logo__link{
-    width: 3.5em; ;
-}
-
-header{
-    display: flex;
-    justify-content: space-between;
-    padding: 0 1rem;
+.logo__link {
+  width: 3.5em;
 }
 
-.flex{
-    display: flex;
-    gap: 1rem;
+.flex {
+  display: flex;
+  gap: 1rem;
 }
 .img {
-    max-width: 100%;
+  max-width: 100%;
 }

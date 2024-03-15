@@ -225,7 +225,7 @@ async function rentalPropertyLinks(url) {
     });
 }
 
-rentalPropertyLinks(firstUrl);
+// rentalPropertyLinks(firstUrl);
 
 // test
 

@@ -6,6 +6,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import image from "../assets/mika-baumeister-PshCtT16gJo-unsplash.jpg";
+
 const Card = () => {
   return (
     <div className='mt-8 text-black w-full max-w-[28rem] mx-auto min-h-full  p-2 border rounded-lg border-black'>
@@ -37,7 +38,7 @@ const Card = () => {
               per month
             </h2>
           </article>
-          <hr class='h-px my-3 bg-gray-200 border dark:bg-gray-700'></hr>
+          <hr className='h-px my-3 bg-gray-200 border dark:bg-gray-700'></hr>
           <article className='more-listing-info'>
             <ul className='flex justify-between'>
               <li className='capitalize'>

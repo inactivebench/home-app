@@ -1,18 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { LoginContext } from "./context/LoginContext";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Buy from "./pages/Buy";
 import Home from "./pages/Home";
 
 const App = () => {
+  const [isLoggedIn, setLoggedIn] = useState(false);
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='signin' element={<Signin />} />
-        <Route path='signup' element={<Signup />} />
-      </Routes>
-    </BrowserRouter>
+    <LoginContext.Provider value={{ isLoggedIn, setLoggedIn }}>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='signin' element={<Signin />} />
+          <Route path='signup' element={<Signup />} />
+          <Route path='buy' element={<Buy />} />
+        </Routes>
+      </BrowserRouter>
+    </LoginContext.Provider>
   );
 };
 export default App;

@@ -2,6 +2,7 @@ import { useRef, useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/home_bnw.svg";
 import axios from "axios";
+import { LoginContext } from "../context/LoginContext";
 
 const SIGNIN_URL = "http://localhost:5000/signin";
 axios.defaults.withCredentials = true;
@@ -14,7 +15,7 @@ const Signin = () => {
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
-  const [loginStatus, setLoginStatus] = useState(false);
+  const { setLoggedIn } = useContext(LoginContext);
 
   useEffect(() => {
     emailRef.current.focus();
@@ -48,15 +49,15 @@ const Signin = () => {
         )
         .then((response) => {
           if (!response.data.auth) {
-            setLoginStatus(false);
+            setLoggedIn(false);
           } else {
             console.log(response.data);
             localStorage.setItem("token", response.data.token);
-            setLoginStatus(true);
+            setLoggedIn(true);
           }
         });
 
-      console.log(JSON.stringify(response?.data));
+      // console.log(JSON.stringify(response?.data));
       // const accessToken = response?.data?.accessToken;
       // const roles = response?.data?.roles;
       // setAuth({ email, pwd, roles, accessToken });
@@ -72,7 +73,7 @@ const Signin = () => {
       } else if (err.response?.status === 401) {
         setErrMsg("Unauthorized");
       } else {
-        setErrMsg("Signin Failed");
+        setErrMsg("Sign in Failed");
       }
       errRef.current.focus();
     }

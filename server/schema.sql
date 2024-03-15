@@ -12,11 +12,9 @@ customer_lname VARCHAR(50) NOT NULL,
 
 CREATE TABLE property_owner (
   property_owner_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-property_owner_fname VARCHAR(50) NOT NULL,
-property_owner_lname VARCHAR(50) NOT NULL,
-property_owner_email VARCHAR(50) NOT NULL UNIQUE, CHECK(property_owner_email like '%@%.%'),
-`password` VARCHAR(255) NOT NULL,
- phone_number VARCHAR(15) NOT NULL UNIQUE,
+property_owner_name VARCHAR(50) NOT NULL,
+`password` VARCHAR(255) NOT NULL UNIQUE,
+ phone_number VARCHAR(15) NOT NULL UNIQUE
   
 );
 
@@ -26,7 +24,7 @@ property_location VARCHAR(50) NOT NULL,
 property_price DECIMAL(8,2) NOT NULL DEFAULT 0,
 property_size VARCHAR(50) NOT NULL,
 property_description TEXT,
-property_image_url VARCHAR(255),
+property_image_url VARCHAR(255)
 
 );
 
@@ -45,19 +43,8 @@ property_id INTEGER NOT NULL,
 rating INTEGER NOT NULL,
 comment TEXT NOT NULL,
 timestamp TIMESTAMP NOT NULL DEFAULT NOW(),
-FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
 FOREIGN KEY (property_id) REFERENCES property(property_id)
-);
-
-
-CREATE TABLE visualization(
-visualization_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-customer_id INTEGER NOT NULL,
-visualization_type ,
-timestamp TIMESTAMP NOT NULL DEFAULT NOW(),
-property_owner_id INTEGER NOT NULL,
-FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
-
 );
 
 
