@@ -152,7 +152,7 @@ app.get("/getusers", (req, res) => {
 
 // web scraping with cheerio
 const firstUrl =
-  "https://www.privatepropertykenya.com/apartment-for-rent?search=Nairobi&bedroom=&min_price=&max_price=&button=&page=53";
+  "https://www.privatepropertykenya.com/apartment-for-rent?search=Nairobi&bedroom=&min_price=&max_price=&button=&page=10";
 //link to each property listing
 async function rentalPropertyLinks(url) {
   await axios
@@ -172,18 +172,8 @@ async function rentalPropertyLinks(url) {
       });
       // console.log(propertyLinks);
       console.log(propertyLinks.length);
-     
-     /* if (propertyLinks.length < 1) {
-        console.log(propertyLinks);
-        return propertyLinks;
-      } else {
-         Go fetch the next page ?page=X+1
-        const nextPageNumber = parseInt(url.match(/page=(\d+)$/)[1], 10) + 1;
-        const nextUrl = `https://www.privatepropertykenya.com/apartment-for-rent?search=Nairobi&bedroom=&min_price=&max_price=&button=&page=${nextPageNumber}`;
-        propertyLinks.concat(rentalPropertyLinks(nextUrl));
-      } */
 
-     // extract data from each property link
+      // extract data from each property link
       propertyLinks.forEach((propertyLink) => {
         let propertyUrl = `https://www.privatepropertykenya.com${propertyLink.listingUrl}`;
 

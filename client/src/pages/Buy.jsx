@@ -8,9 +8,11 @@ const Buy = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      navigate("/signin");
-    }
+    setTimeout(() => {
+      if (!isLoggedIn) {
+        navigate("/signin");
+      }
+    }, 1000);
   }, []);
   return (
     <div>
