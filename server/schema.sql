@@ -13,15 +13,15 @@ customer_lname VARCHAR(50) NOT NULL,
 
 CREATE TABLE property (
 property_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
-property_title VARCHAR(50) NOT NULL,
+property_title VARCHAR(255) NOT NULL,
 property_location VARCHAR(50) NOT NULL,
 property_image_url VARCHAR(255),
-property_price DECIMAL(8,2) NOT NULL DEFAULT 0,
+property_price DECIMAL(10,2) NOT NULL DEFAULT 0,
 no_of_beds INTEGER,
 no_of_baths INTEGER,
 property_description TEXT,
 property_owner_name VARCHAR(50) NOT NULL,
-property_owner_contact VARCHAR(15) NOT NULL UNIQUE
+property_owner_contact VARCHAR(20) NOT NULL 
 
 );
 
@@ -47,14 +47,14 @@ FOREIGN KEY (property_id) REFERENCES property(property_id)
 
 -- add property and property owner foreign keys
 
-ALTER TABLE property
-    ADD property_owner_id INTEGER,
-    ADD FOREIGN KEY(property_owner_id) REFERENCES property_owner(property_owner_id);
+-- ALTER TABLE property
+--     ADD property_owner_id INTEGER,
+--     ADD FOREIGN KEY(property_owner_id) REFERENCES property_owner(property_owner_id);
 
 
-ALTER TABLE property_owner
-    ADD property_id INTEGER,
-    ADD FOREIGN KEY(property_id) REFERENCES property(property_id);
+-- ALTER TABLE property_owner
+--     ADD property_id INTEGER,
+--     ADD FOREIGN KEY(property_id) REFERENCES property(property_id);
 
 -- CREATE TABLE property_owner (
 --   property_owner_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,

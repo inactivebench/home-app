@@ -2,7 +2,7 @@ const express = require("express");
 const mysql = require("mysql2");
 const db = require("./config/db");
 const session = require("./config/session");
-const rentalPropertyData = require("./routes/scrapeData");
+const propertyData = require("./routes/scrapeData");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -45,10 +45,11 @@ app.use(
 //routes
 // users middleware
 app.use("/api/users", require("./routes/userRoutes"));
+// app.use("/api/property", require("./routes/propertyRoutes"));
 const firstUrl =
-  "https://www.privatepropertykenya.com/apartment-for-rent?search=Nairobi&bedroom=&min_price=&max_price=&button=&page=10";
+  "https://www.privatepropertykenya.com/apartment-for-rent?search=Nairobi&bedroom=&min_price=&max_price=&button=&page=11";
 
-// rentalPropertyData(firstUrl);
+propertyData(firstUrl);
 // test
 
 app.get("/api", (req, res) => {
