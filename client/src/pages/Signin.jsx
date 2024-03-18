@@ -4,8 +4,7 @@ import logo from "../assets/home_bnw.svg";
 import axios from "axios";
 import { LoginContext } from "../context/LoginContext";
 
-const SIGNIN_URL = "http://localhost:5000/signin";
-axios.defaults.withCredentials = true;
+const SIGNIN_URL = "http://localhost:5000/api/users/signin";
 
 const Signin = () => {
   const emailRef = useRef();
@@ -27,7 +26,7 @@ const Signin = () => {
   }, [email, pwd]);
 
   useEffect(() => {
-    axios.get("http://localhost:5000/signin").then((response) => {
+    axios.get("http://localhost:5000/api/users/signin").then((response) => {
       console.log(response);
       if (response.data.loggedIn == true) {
         setRole(response.data.user[0].role);
@@ -79,6 +78,17 @@ const Signin = () => {
       errRef.current.focus();
     }
   };
+  // const userAuthenticeted = () => {
+  //   axios
+  //     .get("http://localhost:5000/api/users/isUserAuth", {
+  //       headers: {
+  //         "x-access-token": localStorage.getItem("token"),
+  //       },
+  //     })
+  //     .then((response) => {
+  //       console.log(response);
+  //     });
+  // };
 
   return (
     <>
@@ -134,6 +144,7 @@ const Signin = () => {
                 className='block w-full rounded-md border-0 py-1.5 px-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                 required
               />
+
               <button className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'>
                 Sign In
               </button>
@@ -147,7 +158,6 @@ const Signin = () => {
                 >
                   Sign Up
                 </Link>
-                {/* <a href="#">Sign Up</a> */}
               </span>
             </p>
           </div>
