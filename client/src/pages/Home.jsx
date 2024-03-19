@@ -2,13 +2,18 @@ import React, { useState, useEffect, useContext } from "react";
 import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import Card from "../components/Card";
+import Cta from "../components/Cta";
 
 const Home = () => {
   return (
-    <div>
+    <>
       <Navbar />
-      <Card />
-    </div>
+      <Hero />
+      <Cta />
+      <div className='container'>
+        <Card />
+      </div>
+    </>
   );
 };
 

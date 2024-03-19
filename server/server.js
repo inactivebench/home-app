@@ -49,7 +49,7 @@ app.use("/api/users", require("./routes/userRoutes"));
 const firstUrl =
   "https://www.privatepropertykenya.com/apartment-for-rent?search=Nairobi&bedroom=&min_price=&max_price=&button=&page=11";
 
-propertyData(firstUrl);
+// propertyData(firstUrl);
 // test
 
 app.get("/api", (req, res) => {
