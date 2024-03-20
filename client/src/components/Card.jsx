@@ -43,9 +43,15 @@ const Card = () => {
             <ul className='flex justify-between'>
               <li className='capitalize'>
                 <FontAwesomeIcon icon={faBed} className='pr-2' />3 beds
+                {/* {listing.bedrooms > 1
+                  ? `${listing.bedrooms} beds `
+                  : `${listing.bedrooms} bed `} */}
               </li>
               <li className='capitalize'>
                 <FontAwesomeIcon icon={faBath} className='pr-2' />4 baths
+                {/* {listing.bathrooms > 1
+                  ? `${listing.bathrooms} baths `
+                  : `${listing.bathrooms} bath `} */}
               </li>
             </ul>
           </article>

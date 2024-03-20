@@ -14,16 +14,22 @@ customer_lname VARCHAR(50) NOT NULL,
 CREATE TABLE property (
 property_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
 property_title VARCHAR(255) NOT NULL,
+property_type VARCHAR(50) NOT NULL,
+property_category VARCHAR(50) NOT NULL,
 property_location VARCHAR(50) NOT NULL,
 property_image_url VARCHAR(255),
 property_price DECIMAL(10,2) NOT NULL DEFAULT 0,
-no_of_beds INTEGER,
-no_of_baths INTEGER,
+bedrooms INTEGER,
+bathrooms INTEGER,
 property_description TEXT,
 property_owner_name VARCHAR(50) NOT NULL,
 property_owner_contact VARCHAR(20) NOT NULL 
-
 );
+-- category -> house, apartment
+-- type -> rent, sale
+
+
+
 
 CREATE TABLE search_history (
 search_id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
