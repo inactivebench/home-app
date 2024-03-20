@@ -41,10 +41,10 @@ const Navbar = () => {
           <div className='hidden lg:flex'>
             <ul className='flex flex-col gap-8 sm:text-center sm:font-bold md:flex-row capitalize text-black '>
               <li>
-                <Link to='/buy'>Buy</Link>
+                <Link to='/search'>Buy</Link>
               </li>
               <li>
-                <Link to='/rent'> Rent</Link>
+                <Link to='/search'> Rent</Link>
               </li>
               <li>
                 <Link to='/visualize'>Visualize</Link>
@@ -97,10 +97,10 @@ const Navbar = () => {
                 <div className='space-y-2 py-6'>
                   <ul className='flex flex-col sm:text-center sm:font-bold lg:flex-row gap-8 md:gap-4 capitalize text-black'>
                     <li>
-                      <Link to='/buy'>Buy</Link>
+                      <Link to='/search'>Buy</Link>
                     </li>
                     <li>
-                      <Link to='/rent'> Rent</Link>
+                      <Link to='/search'> Rent</Link>
                     </li>
                     <li>
                       <Link to='/visualize'>Visualize</Link>

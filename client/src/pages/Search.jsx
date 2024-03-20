@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
 
-const Buy = () => {
+const Listing = () => {
   const { isLoggedIn } = useContext(LoginContext);
   const navigate = useNavigate();
 
@@ -21,4 +21,4 @@ const Buy = () => {
     </div>
   );
 };
-export default Buy;
+export default Listing;

@@ -1,11 +1,11 @@
 import Navbar from "../components/Navbar";
 
-const Rent = () => {
+const Listing = () => {
   return (
     <div>
       <Navbar />
-      <h2>Rent</h2>
+      <h2>Listing</h2>
     </div>
   );
 };
-export default Rent;
+export default Listing;

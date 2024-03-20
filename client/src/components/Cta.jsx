@@ -7,7 +7,7 @@ const ctaCard = [
   {
     id: 1,
     title: "Browse Homes",
-    link: "/buy",
+    link: "/search",
     img: buy,
     description:
       "Find your dream home or investment opportunity. Explore a wide range of properties for sale in your desired location.",
@@ -16,7 +16,7 @@ const ctaCard = [
   {
     id: 2,
     title: "Rent a Home",
-    link: "/rent",
+    link: "/search",
     img: rent,
     description:
       "Discover a wide range of rental properties . Explore listings of apartments and houses available for rent.",

@@ -4,8 +4,8 @@ import { LoginContext } from "./context/LoginContext";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Home from "./pages/Home";
-import Buy from "./pages/Buy";
-import Rent from "./pages/Rent";
+import Search from "./pages/Search";
+import Listing from "./pages/Listing";
 import Visualize from "./pages/Visualize";
 
 const App = () => {
@@ -17,8 +17,8 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route path='signin' element={<Signin />} />
           <Route path='signup' element={<Signup />} />
-          <Route path='buy' element={<Buy />} />
-          <Route path='rent' element={<Rent />} />
+          <Route path='search' element={<Search />} />
+          <Route path='listing' element={<Listing />} />
           <Route path='visualize' element={<Visualize />} />
         </Routes>
       </BrowserRouter>

@@ -16,7 +16,7 @@ const Hero = () => {
             </p>
             <div className='mt-10 flex items-center justify-center'>
               <Link
-                to='/buy'
+                to='/search'
                 className='w-fit border-2 border-white  text-white text-lg py-2 px-4 font-bold capitalize  hover:bg-white hover:text-black'
               >
                 find your home
