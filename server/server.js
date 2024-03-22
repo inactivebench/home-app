@@ -46,10 +46,14 @@ app.use(
 // users middleware
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/property", require("./routes/propertyRoutes"));
-const firstUrl =
-  "https://www.privatepropertykenya.com/apartment-for-rent?search=Nairobi&bedroom=&min_price=&max_price=&button=&page=11";
 
-// propertyData(firstUrl);
+// call scrape function
+// rental property
+const testUrl =
+  "https://www.privatepropertykenya.com/apartment-for-rent?search=Nairobi&bedroom=&min_price=&max_price=&button=&page=13";
+
+// propertyData(testUrl);
+
 // test
 
 app.get("/api", (req, res) => {

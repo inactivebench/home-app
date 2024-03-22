@@ -245,12 +245,24 @@ const Search = () => {
                     </div>
                     <div className='listing-info'>
                       <div className='listing-tag flex justify-between'>
-                        <span className='capitalize rounded-md bg-sky-200 p-2 text-xs'>
-                          apartment
-                        </span>
-                        <span className='capitalize rounded-md bg-green-200 p-2 text-xs'>
-                          for rent
-                        </span>
+                        {listing.property_category === "Apartment" ? (
+                          <span className='capitalize rounded-md bg-sky-200 p-2 text-xs'>
+                            apartment
+                          </span>
+                        ) : (
+                          <span className='capitalize rounded-md bg-amber-300 p-2 text-xs'>
+                            house
+                          </span>
+                        )}
+                        {listing.property_type === "Rent" ? (
+                          <span className='capitalize rounded-md bg-green-200 p-2 text-xs'>
+                            for rent
+                          </span>
+                        ) : (
+                          <span className='capitalize rounded-md bg-teal-300 p-2 text-xs'>
+                            for sale
+                          </span>
+                        )}
                       </div>
                       <article className='listing-data my-2'>
                         <h1 className='font-bold capitalize text-2xl'>
@@ -275,15 +287,15 @@ const Search = () => {
                         <ul className='flex justify-between'>
                           <li className='capitalize'>
                             <FontAwesomeIcon icon={faBed} className='pr-2' />
-                            {listing.no_of_beds > 1
-                              ? `${listing.no_of_beds} beds `
-                              : `${listing.no_of_beds} bed `}
+                            {listing.bedrooms > 1
+                              ? `${listing.bedrooms} beds `
+                              : `${listing.bedrooms} bed `}
                           </li>
                           <li className='capitalize'>
                             <FontAwesomeIcon icon={faBath} className='pr-2' />
                             {listing.no_of_baths > 1
-                              ? `${listing.no_of_baths} baths `
-                              : `${listing.no_of_baths} bath `}
+                              ? `${listing.bathrooms} baths `
+                              : `${listing.bathrooms} bath `}
                           </li>
                         </ul>
                       </article>
