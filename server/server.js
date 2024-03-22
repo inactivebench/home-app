@@ -45,7 +45,7 @@ app.use(
 //routes
 // users middleware
 app.use("/api/users", require("./routes/userRoutes"));
-// app.use("/api/property", require("./routes/propertyRoutes"));
+app.use("/api/property", require("./routes/propertyRoutes"));
 const firstUrl =
   "https://www.privatepropertykenya.com/apartment-for-rent?search=Nairobi&bedroom=&min_price=&max_price=&button=&page=11";
 

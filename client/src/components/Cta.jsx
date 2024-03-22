@@ -52,8 +52,8 @@ const Cta = () => {
                   to={link}
                   className='group relative overflow-hidden w-fit border-2 border-indigo-500 rounded-md capitalize bg-white  text-xl py-2 px-4 font-bold '
                 >
-                  <div class='absolute inset-0 w-0 bg-indigo-500 transition-all duration-[375ms] ease-out group-hover:w-full'></div>
-                  <span class='relative text-indigo-500 group-hover:text-white'>
+                  <div className='absolute inset-0 w-0 bg-indigo-500 transition-all duration-[375ms] ease-out group-hover:w-full'></div>
+                  <span className='relative text-indigo-500 group-hover:text-white'>
                     {btn}
                   </span>
                 </Link>

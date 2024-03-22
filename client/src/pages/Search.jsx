@@ -1,7 +1,14 @@
-import { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { LoginContext } from "../context/LoginContext";
-import Card from "../components/Card";
+import {
+  faLocationDot,
+  faBath,
+  faBed,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+// import Card from "../components/Card";
 
 const Search = () => {
   const [sidebardata, setSidebardata] = useState({
@@ -41,7 +48,7 @@ const Search = () => {
         searchTerm: searchTermFromUrl || "",
         type: typeFromUrl || "all",
         minPrice: minPriceFromUrl || "",
-        minPrice: maxPriceFromUrl || "",
+        maxPrice: maxPriceFromUrl || "",
 
         //  parking: parkingFromUrl === "true" ? true : false,
       });
@@ -51,15 +58,24 @@ const Search = () => {
       setLoading(true);
       setShowMore(false);
       const searchQuery = urlParams.toString();
-      const res = await fetch(`/api/listing/get?${searchQuery}`);
-      const data = await res.json();
-      if (data.length > 10) {
-        setShowMore(true);
-      } else {
-        setShowMore(false);
+      try {
+        const response = await axios(
+          `http://localhost:5000/api/property/properties?${searchQuery}`
+        );
+        const data = response.data;
+
+        // const res = await fetch(`/api/listing/get?${searchQuery}`);
+        // const data = await res.json();
+        if (data.length > 10) {
+          setShowMore(true);
+        } else {
+          setShowMore(false);
+        }
+        setListings(data);
+        setLoading(false);
+      } catch (error) {
+        throw error;
       }
-      setListings(data);
-      setLoading(false);
     };
 
     fetchListings();
@@ -102,8 +118,12 @@ const Search = () => {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set("startIndex", startIndex);
     const searchQuery = urlParams.toString();
-    const res = await fetch(`/api/listing/get?${searchQuery}`);
-    const data = await res.json();
+    const response = await axios(
+      `http://localhost:5000/api/property/properties?${searchQuery}`
+    );
+    const data = response.data;
+    // const res = await fetch(`/api/listing/get?${searchQuery}`);
+    // const data = await res.json();
     if (data.length < 10) {
       setShowMore(false);
     }
@@ -112,7 +132,10 @@ const Search = () => {
   return (
     <div className='flex flex-col md:flex-row'>
       <div className='p-7  border-b-2 md:border-r-2 md:min-h-screen'>
-        <form onSubmit={handleSubmit} className='flex flex-col gap-8'>
+        <form
+          onSubmit={handleSubmit}
+          className='flex flex-col gap-8 text-black'
+        >
           <div className='flex items-center gap-2'>
             <label className='whitespace-nowrap font-semibold'>
               Search Term:
@@ -199,10 +222,75 @@ const Search = () => {
             </p>
           )}
 
+          {/* {!loading &&
+            listings &&
+            listings.map((listing) => (
+              <Card key={listing.property_id} listing={listing} />
+            ))} */}
           {!loading &&
             listings &&
             listings.map((listing) => (
-              <Card key={listing._id} listing={listing} />
+              <Link to={`/listing/${listing.property_id}`}>
+                <div className='mt-8 text-black w-full max-w-[28rem] mx-auto min-h-full  p-2 border rounded-lg border-black'>
+                  <div
+                    className='w-full max-w-[28rem] mx-auto min-h-full '
+                    key={listing.property_id}
+                  >
+                    <div className='listing-header  mb-3 '>
+                      <img
+                        className='rounded-md'
+                        src={listing.property_image_url}
+                        alt='apartment image'
+                      />
+                    </div>
+                    <div className='listing-info'>
+                      <div className='listing-tag flex justify-between'>
+                        <span className='capitalize rounded-md bg-sky-200 p-2 text-xs'>
+                          apartment
+                        </span>
+                        <span className='capitalize rounded-md bg-green-200 p-2 text-xs'>
+                          for rent
+                        </span>
+                      </div>
+                      <article className='listing-data my-2'>
+                        <h1 className='font-bold capitalize text-2xl'>
+                          {listing.property_title}
+                        </h1>
+                        <p className='text-sm'>
+                          <FontAwesomeIcon
+                            icon={faLocationDot}
+                            className='pr-2'
+                          />
+                          {listing.property_location}
+                        </p>
+                        <h2 className='capitalize text-slate-500'>
+                          <span className='text-blue-700 text-2xl font-bold '>
+                            Kshs {listing.property_price}
+                          </span>
+                          per month
+                        </h2>
+                      </article>
+                      <hr className='h-px my-3 bg-gray-200 border dark:bg-gray-700'></hr>
+                      <article className='more-listing-info'>
+                        <ul className='flex justify-between'>
+                          <li className='capitalize'>
+                            <FontAwesomeIcon icon={faBed} className='pr-2' />
+                            {listing.no_of_beds > 1
+                              ? `${listing.no_of_beds} beds `
+                              : `${listing.no_of_beds} bed `}
+                          </li>
+                          <li className='capitalize'>
+                            <FontAwesomeIcon icon={faBath} className='pr-2' />
+                            {listing.no_of_baths > 1
+                              ? `${listing.no_of_baths} baths `
+                              : `${listing.no_of_baths} bath `}
+                          </li>
+                        </ul>
+                      </article>
+                    </div>
+                  </div>
+                </div>
+              </Link>
             ))}
 
           {showMore && (
