@@ -48,7 +48,8 @@ const Listing = () => {
         <div>
           <div className='flex flex-col max-w-4xl mx-auto p-3 my-7 gap-4'>
             <p className='text-2xl font-semibold'>
-              {listing[0].property_title} - $ {listing[0].property_price}
+              {listing[0].property_title} - Kshs{" "}
+              {listing[0].property_price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
               {/* {listing.type === "rent" && " / month"} */}
             </p>
             <p className='flex items-center mt-6 gap-2 text-slate-600  text-sm'>
@@ -69,16 +70,16 @@ const Listing = () => {
             </p>
             <ul className='text-green-900 font-semibold text-sm flex flex-wrap items-center gap-4 sm:gap-6'>
               <li className='flex items-center gap-1 whitespace-nowrap '>
-                <FontAwesomeIcon icon={faBed} className='pr-2' />
-                {listing[0].no_of_beds > 1
-                  ? `${listing[0].no_of_beds} beds `
-                  : `${listing[0].no_of_beds} bed `}
+                <FontAwesomeIcon icon={faBed} className='' />
+                {listing[0].bedrooms > 1
+                  ? `${listing[0].bedrooms} beds `
+                  : `${listing[0].bedrooms} bed `}
               </li>
               <li className='flex items-center gap-1 whitespace-nowrap '>
-                <FontAwesomeIcon icon={faBath} className='pr-2' />
-                {listing[0].no_of_baths > 1
-                  ? `${listing[0].no_of_baths} baths `
-                  : `${listing[0].no_of_baths} bath `}
+                <FontAwesomeIcon icon={faBath} className='' />
+                {listing[0].bathrooms > 1
+                  ? `${listing[0].bathrooms} baths `
+                  : `${listing[0].bathrooms} bath `}
               </li>
             </ul>
           </div>

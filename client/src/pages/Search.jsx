@@ -11,7 +11,7 @@ import Pagination from "../components/Pagination";
 import axios from "axios";
 // import Card from "../components/Card";
 
-let PageSize = 10;
+let PageSize = 12;
 
 const Search = () => {
   const [sidebardata, setSidebardata] = useState({
@@ -20,6 +20,7 @@ const Search = () => {
     category: "all",
     minPrice: "",
     maxPrice: "",
+    order: "DESC",
   });
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
@@ -42,13 +43,15 @@ const Search = () => {
     const categoryFromUrl = urlParams.get("category");
     const minPriceFromUrl = urlParams.get("minPrice");
     const maxPriceFromUrl = urlParams.get("maxPrice");
+    const orderFromUrl = urlParams.get("order");
 
     if (
       searchTermFromUrl ||
       typeFromUrl ||
       categoryFromUrl ||
       minPriceFromUrl ||
-      maxPriceFromUrl
+      maxPriceFromUrl ||
+      orderFromUrl
     ) {
       setSidebardata({
         searchTerm: searchTermFromUrl || "",
@@ -56,6 +59,7 @@ const Search = () => {
         category: categoryFromUrl || "all",
         minPrice: minPriceFromUrl || "",
         maxPrice: maxPriceFromUrl || "",
+        order: orderFromUrl || "DESC",
       });
     }
 
@@ -79,13 +83,6 @@ const Search = () => {
   }, [location.search]);
 
   const handleChange = (e) => {
-    // if (
-    //   e.target.id === "all" ||
-    //   e.target.id === "rent" ||
-    //   e.target.id === "sale"
-    // ) {
-    //   setSidebardata({ ...sidebardata, type: e.target.id });
-    // }
     if (e.target.id === "type") {
       setSidebardata({ ...sidebardata, type: e.target.value });
     }
@@ -102,6 +99,9 @@ const Search = () => {
     if (e.target.id === "maxPrice") {
       setSidebardata({ ...sidebardata, maxPrice: e.target.value });
     }
+    if (e.target.id === "order") {
+      setSidebardata({ ...sidebardata, type: e.target.value });
+    }
   };
 
   const handleSubmit = (e) => {
@@ -112,26 +112,11 @@ const Search = () => {
     urlParams.set("category", sidebardata.category);
     urlParams.set("minPrice", sidebardata.minPrice);
     urlParams.set("maxPrice", sidebardata.maxPrice);
+    urlParams.set("order", sidebardata.order);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
   };
 
-  const onShowMoreClick = async () => {
-    const numberOfListings = listings.length;
-    const startIndex = numberOfListings;
-    const urlParams = new URLSearchParams(location.search);
-    urlParams.set("startIndex", startIndex);
-    const searchQuery = urlParams.toString();
-    const response = await axios(
-      `http://localhost:5000/api/property/properties?${searchQuery}`
-    );
-
-    const data = response.data;
-    if (data.length < 10) {
-      setShowMore(false);
-    }
-    setListings([...listings, ...data]);
-  };
   const propertyData = useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
@@ -233,14 +218,11 @@ const Search = () => {
           </div>
           <select
             onChange={handleChange}
-            defaultValue={"created_at_desc"}
-            id='sort_order'
+            id='order'
             className='border rounded-lg p-3'
           >
-            <option value='regularPrice_desc'>Price high to low</option>
-            <option value='regularPrice_asc'>Price low to hight</option>
-            <option value='createdAt_desc'>Latest</option>
-            <option value='createdAt_asc'>Oldest</option>
+            <option value='DESC'>Price high to low</option>
+            <option value='ASC'>Price low to hight</option>
           </select>
           <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>
             Search
@@ -251,7 +233,7 @@ const Search = () => {
         <h1 className='text-3xl font-semibold border-b p-3 text-slate-700 mt-5'>
           Listing results:
         </h1>
-        <div className='p-7 flex flex-wrap gap-4'>
+        <div className='p-7 flex flex-wrap gap-4 justify-center'>
           {!loading && listings.length === 0 && (
             <p className='text-xl text-slate-700'>No listing found!</p>
           )}
@@ -269,92 +251,91 @@ const Search = () => {
           {!loading &&
             listings &&
             propertyData.map((listing) => (
+              // ------------card------------
               <Link to={`/listing/${listing.property_id}`}>
-                <div className='mt-8 text-black w-full max-w-[28rem] mx-auto min-h-full  p-2 border rounded-lg border-black'>
-                  <div
-                    className='w-full max-w-[28rem] mx-auto min-h-full '
-                    key={listing.property_id}
-                  >
-                    <div className='w-full   mb-3 '>
-                      <img
-                        className='h-[400px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300 rounded-md'
-                        src={listing.property_image_url}
-                        alt='apartment image'
-                      />
+                <div
+                  className='mt-8 w-full max-w-[24rem] md:w-[24rem] mx-auto min-h-full text-black shadow-lg '
+                  key={listing.property_id}
+                >
+                  <div className='w-full   mb-3 '>
+                    <img
+                      className='h-[400px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300 rounded-md'
+                      src={listing.property_image_url}
+                      alt='apartment image'
+                    />
+                  </div>
+                  <div className='listing-info px-4'>
+                    <div className='listing-tag flex justify-between'>
+                      {listing.property_category === "Apartment" ? (
+                        <span className='capitalize rounded-md bg-sky-200 p-2 text-xs'>
+                          apartment
+                        </span>
+                      ) : (
+                        <span className='capitalize rounded-md bg-amber-300 p-2 text-xs'>
+                          house
+                        </span>
+                      )}
+                      {listing.property_type === "Rent" ? (
+                        <span className='capitalize rounded-md bg-green-200 p-2 text-xs'>
+                          for rent
+                        </span>
+                      ) : (
+                        <span className='capitalize rounded-md bg-teal-300 p-2 text-xs'>
+                          for sale
+                        </span>
+                      )}
                     </div>
-                    <div className='listing-info'>
-                      <div className='listing-tag flex justify-between'>
-                        {listing.property_category === "Apartment" ? (
-                          <span className='capitalize rounded-md bg-sky-200 p-2 text-xs'>
-                            apartment
+                    <article className='listing-data my-2'>
+                      <h1 className='font-bold capitalize text-2xl'>
+                        {listing.property_title}
+                      </h1>
+                      <p className='text-sm'>
+                        <FontAwesomeIcon
+                          icon={faLocationDot}
+                          className='text-green-600 pr-2 '
+                        />
+                        {listing.property_location}
+                      </p>
+                      {listing.property_type === "Rent" ? (
+                        <h2 className='capitalize text-slate-500'>
+                          <span className='text-blue-500 text-2xl font-bold mr-2 '>
+                            Kshs{" "}
+                            {listing.property_price.replace(
+                              /\B(?=(\d{3})+(?!\d))/g,
+                              ","
+                            )}
                           </span>
-                        ) : (
-                          <span className='capitalize rounded-md bg-amber-300 p-2 text-xs'>
-                            house
+                          / month
+                        </h2>
+                      ) : (
+                        <h2 className='capitalize text-slate-500'>
+                          <span className='text-blue-500 text-2xl font-bold mr-2 '>
+                            Kshs{" "}
+                            {listing.property_price.replace(
+                              /\B(?=(\d{3})+(?!\d))/g,
+                              ","
+                            )}
                           </span>
-                        )}
-                        {listing.property_type === "Rent" ? (
-                          <span className='capitalize rounded-md bg-green-200 p-2 text-xs'>
-                            for rent
-                          </span>
-                        ) : (
-                          <span className='capitalize rounded-md bg-teal-300 p-2 text-xs'>
-                            for sale
-                          </span>
-                        )}
-                      </div>
-                      <article className='listing-data my-2'>
-                        <h1 className='font-bold capitalize text-2xl'>
-                          {listing.property_title}
-                        </h1>
-                        <p className='text-sm'>
-                          <FontAwesomeIcon
-                            icon={faLocationDot}
-                            className='text-green-600 pr-2 '
-                          />
-                          {listing.property_location}
-                        </p>
-                        {listing.property_type === "Rent" ? (
-                          <h2 className='capitalize text-slate-500'>
-                            <span className='text-blue-500 text-2xl font-bold mr-2 '>
-                              Kshs{" "}
-                              {listing.property_price.replace(
-                                /\B(?=(\d{3})+(?!\d))/g,
-                                ","
-                              )}
-                            </span>
-                            / month
-                          </h2>
-                        ) : (
-                          <h2 className='capitalize text-slate-500'>
-                            <span className='text-blue-500 text-2xl font-bold mr-2 '>
-                              Kshs{" "}
-                              {listing.property_price.replace(
-                                /\B(?=(\d{3})+(?!\d))/g,
-                                ","
-                              )}
-                            </span>
-                          </h2>
-                        )}
-                      </article>
-                      <hr className='h-px my-3 bg-gray-200 border dark:bg-gray-700'></hr>
-                      <article className='more-listing-info'>
-                        <ul className='flex justify-between'>
-                          <li className='capitalize'>
-                            <FontAwesomeIcon icon={faBed} className='pr-2' />
-                            {listing.bedrooms > 1
-                              ? `${listing.bedrooms} beds `
-                              : `${listing.bedrooms} bed `}
-                          </li>
-                          <li className='capitalize'>
-                            <FontAwesomeIcon icon={faBath} className='pr-2' />
-                            {listing.no_of_baths > 1
-                              ? `${listing.bathrooms} baths `
-                              : `${listing.bathrooms} bath `}
-                          </li>
-                        </ul>
-                      </article>
-                    </div>
+                        </h2>
+                      )}
+                    </article>
+                    <hr className='h-px my-3 bg-gray-200 border dark:bg-gray-700'></hr>
+                    <article className='more-listing-info'>
+                      <ul className='flex justify-between'>
+                        <li className='capitalize'>
+                          <FontAwesomeIcon icon={faBed} className='pr-2' />
+                          {listing.bedrooms > 1
+                            ? `${listing.bedrooms} beds `
+                            : `${listing.bedrooms} bed `}
+                        </li>
+                        <li className='capitalize'>
+                          <FontAwesomeIcon icon={faBath} className='pr-2' />
+                          {listing.no_of_baths > 1
+                            ? `${listing.bathrooms} baths `
+                            : `${listing.bathrooms} bath `}
+                        </li>
+                      </ul>
+                    </article>
                   </div>
                 </div>
               </Link>

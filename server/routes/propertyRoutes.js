@@ -32,6 +32,7 @@ const getListings = async (req, res, next) => {
     const category = req.query.category || "all";
     const minPrice = parseInt(req.query.minPrice) || 0;
     const maxPrice = parseInt(req.query.maxPrice) || Infinity;
+    const order = req.query.order || "DESC";
     const searchTerm = req.query.searchTerm || "";
 
     let sql = `SELECT * FROM property WHERE property_location LIKE '%${searchTerm}%'`;
@@ -49,6 +50,7 @@ const getListings = async (req, res, next) => {
     } else {
       sql += ` AND property_price >= ${minPrice}`;
     }
+    sql += ` ORDER BY property_price ${order}`;
 
     db.query(sql, (err, result) => {
       if (err) {
