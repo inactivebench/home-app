@@ -19,7 +19,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <header>
+      <header className='bg-white border-b border-slate-300'>
         <nav className='flex justify-between items-center px-6 py-4'>
           <Link className='logo__link' to='/'>
             <img className='mx-auto h-12 w-auto' src={logo} alt='logo' />

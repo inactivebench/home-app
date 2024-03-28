@@ -11,6 +11,7 @@ import Visualize from "./pages/Visualize";
 
 const App = () => {
   const [isLoggedIn, setLoggedIn] = useState(false);
+
   return (
     <LoginContext.Provider value={{ isLoggedIn, setLoggedIn }}>
       <BrowserRouter>

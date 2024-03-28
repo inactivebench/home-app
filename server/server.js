@@ -46,6 +46,7 @@ app.use(
 // users middleware
 app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/property", require("./routes/propertyRoutes"));
+app.use("/api/dashboard", require("./routes/dashboardRoutes"));
 
 // call scrape function
 // rental property

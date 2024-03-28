@@ -69,3 +69,4 @@ FOREIGN KEY (property_id) REFERENCES property(property_id)
 --  phone_number VARCHAR(15) NOT NULL UNIQUE
   
 -- );
+
