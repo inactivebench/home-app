@@ -18,7 +18,8 @@ const PieCategory = () => {
     fetchPieData();
   }, []);
   return (
-    <div>
+    <div className='bg-white px-6 py-8 shadow-lg rounded-lg'>
+      <h1 className='text-center mb-4'>Pie</h1>
       <PieChart width={400} height={400}>
         <Pie
           data={pieData}
