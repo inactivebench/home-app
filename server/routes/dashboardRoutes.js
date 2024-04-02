@@ -2,6 +2,31 @@ const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
 
+//card one
+router.get("/card1", (req, res) => {
+  let sql = " SELECT COUNT(*) AS total_properties FROM property; ";
+  let query = db.query(sql, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log("total number of property  ");
+    res.send(result);
+  });
+});
+
+//card two
+router.get("/card2", (req, res) => {
+  let sql =
+    " SELECT property_type, COUNT(*) AS type_count, CONCAT(ROUND((COUNT(*) / (SELECT COUNT(*) FROM property)) * 100), '%') AS percentage FROM property GROUP BY property_type; ";
+  let query = db.query(sql, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log("property number by property ");
+    res.send(result);
+  });
+});
+
 //bar
 router.get("/barChart", (req, res) => {
   let sql =

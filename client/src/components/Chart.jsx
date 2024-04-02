@@ -38,7 +38,7 @@ const Chart = ({ data }) => {
     <div className='bg-white px-6 py-8 shadow-lg rounded-lg'>
       <h1 className='text-center mb-4'>title</h1>
       <BarChart
-        width={600}
+        width={800}
         height={400}
         data={barData}
         margin={{
