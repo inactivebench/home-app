@@ -60,11 +60,11 @@ router.post("/signin", (req, res) => {
       const token = jwt.sign({ id }, "jwtSecret", { expiresIn: 300 });
       req.session.user = result;
       console.log(req.session.user);
-      res.json({ auth: true, token: token, result: result });
+      res.status(200).json({ auth: true, token: token, result: result });
       console.log("SUCCESS !! ");
     } else {
       console.log("wrong email/password ");
-      res.json({ auth: false, message: "no user exists" });
+      res.status(400).json({ auth: false, message: "wrong email/password" });
     }
   });
 });
@@ -75,6 +75,15 @@ router.get("/signin", (req, res) => {
     res.send({ loggedIn: true, user: req.session.user });
   } else {
     res.send({ loggedIn: false });
+  }
+});
+
+router.get("/signout", (req, res) => {
+  try {
+    res.clearCookie("token");
+    res.status(200).json("user has been logged out ");
+  } catch (error) {
+    throw error;
   }
 });
 

@@ -3,7 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/home_bnw.svg";
 import axios from "axios";
 import { LoginContext } from "../context/LoginContext";
-
+import { useDispatch } from "react-redux";
+import {
+  signInStart,
+  signInFailure,
+  signInSuccess,
+} from "../redux/user/userSlice";
 const SIGNIN_URL = "http://localhost:5000/api/users/signin";
 
 const Signin = () => {
@@ -16,6 +21,7 @@ const Signin = () => {
   const [success, setSuccess] = useState(false);
   const { setLoggedIn } = useContext(LoginContext);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     emailRef.current.focus();
@@ -38,6 +44,7 @@ const Signin = () => {
     e.preventDefault();
 
     try {
+      dispatch(signInStart());
       const response = await axios
         .post(
           SIGNIN_URL,
@@ -50,13 +57,14 @@ const Signin = () => {
         .then((response) => {
           if (!response.data.auth) {
             setLoggedIn(false);
+            useDispatch(signInFailure());
           } else {
             console.log(response.data);
             localStorage.setItem("token", response.data.token);
             setLoggedIn(true);
+            dispatch(signInSuccess(response.data));
           }
         });
-
       // console.log(JSON.stringify(response?.data));
       // const accessToken = response?.data?.accessToken;
       // const roles = response?.data?.roles;

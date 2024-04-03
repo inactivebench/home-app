@@ -1,21 +1,35 @@
 import React, { useContext, useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Dialog } from "@headlessui/react";
 import logo from "../assets/home_bnw.svg";
-import { LoginContext } from "../context/LoginContext";
+import { useDispatch } from "react-redux";
+import {
+  signOutUserStart,
+  signOutUserFailure,
+  signOutUserSuccess,
+} from "../redux/user/userSlice";
+// import { LoginContext } from "../context/LoginContext";
 
 const Navbar = () => {
-  const { isLoggedIn, setLoggedIn } = useContext(LoginContext);
+  // const { isLoggedIn, setLoggedIn } = useContext(LoginContext);
+  const { currentUser } = useSelector((state) => state.user);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  useEffect(() => {
-    console.log("loggedIn:" + " " + isLoggedIn);
-  }, []);
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     setLoggedIn(false);
+  };
+  const handleSignOut = async () => {
+    try {
+      dispatch(signOutUserStart());
+      dispatch(signOutUserSuccess());
+    } catch (error) {
+      dispatch(signOutUserFailure());
+    }
   };
   return (
     <>
@@ -52,7 +66,7 @@ const Navbar = () => {
             </ul>
           </div>
 
-          {!isLoggedIn ? (
+          {!currentUser ? (
             <Link
               to='/signin'
               className='rounded-lg border-2 border-indigo-500  text-indigo-500 text-lg py-2 px-4 font-bold hover:bg-indigo-500 hover:text-white hidden lg:flex'
@@ -62,9 +76,9 @@ const Navbar = () => {
           ) : (
             <button
               className='rounded-lg bg-red-500 text-white text-lg font-bold py-2 px-4 '
-              onClick={handleLogout}
+              onClick={handleSignOut}
             >
-              Logout
+              Sign out
             </button>
           )}
         </nav>
@@ -119,7 +133,7 @@ const Navbar = () => {
                 <div className='py-6'>
                   <button
                     className='rounded-lg bg-red-500 text-white text-lg font-bold py-2 px-4 '
-                    onClick={handleLogout}
+                    onClick={handleSignOut}
                   >
                     Logout
                   </button>

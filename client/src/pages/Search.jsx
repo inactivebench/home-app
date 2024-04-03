@@ -9,6 +9,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Pagination from "../components/Pagination";
 import axios from "axios";
+import { useSelector } from "react-redux";
 // import Card from "../components/Card";
 
 let PageSize = 12;
@@ -24,13 +25,14 @@ const Search = () => {
   });
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
-  const { isLoggedIn } = useContext(LoginContext);
+  const { currentUser } = useSelector((state) => state.user);
+  // const { isLoggedIn } = useContext(LoginContext);
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => {
-      if (!isLoggedIn) {
+      if (!currentUser) {
         navigate("/signin");
       }
     }, 1000);
@@ -163,37 +165,6 @@ const Search = () => {
               <option value='apartment'>Apartment</option>
               <option value='house'>House</option>
             </select>
-
-            {/* <div className='flex gap-2'>
-              <input
-                type='checkbox'
-                id='all'
-                className='w-5'
-                onChange={handleChange}
-                checked={sidebardata.type === "all"}
-              />
-              <span>Rent & Sale</span>
-            </div>
-            <div className='flex gap-2'>
-              <input
-                type='checkbox'
-                id='rent'
-                className='w-5'
-                onChange={handleChange}
-                checked={sidebardata.type === "rent"}
-              />
-              <span>Rent</span>
-            </div>
-            <div className='flex gap-2'>
-              <input
-                type='checkbox'
-                id='sale'
-                className='w-5'
-                onChange={handleChange}
-                checked={sidebardata.type === "sale"}
-              />
-              <span>Sale</span>
-            </div> */}
           </div>
           <div className='flex gap-2 flex-wrap items-center'>
             <label className='font-semibold'>Price:</label>
@@ -243,11 +214,6 @@ const Search = () => {
             </p>
           )}
 
-          {/* {!loading &&
-            listings &&
-            listings.map((listing) => (
-              <Card key={listing.property_id} listing={listing} />
-            ))} */}
           {!loading &&
             listings &&
             propertyData.map((listing) => (
