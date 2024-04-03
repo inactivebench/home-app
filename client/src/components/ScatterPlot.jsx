@@ -5,6 +5,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ResponsiveContainer,
   ScatterChart,
   Scatter,
 } from "recharts";
@@ -31,23 +32,23 @@ const ScatterPlot = () => {
   return (
     <div className='bg-white px-6 py-8 shadow-lg rounded-lg'>
       <h1 className='capitalize'>scatter data</h1>
-      <ScatterChart
-        width={500}
-        height={400}
-        data={scatterData}
-        margin={{
-          top: 20,
-          right: 20,
-          bottom: 20,
-          left: 20,
-        }}
-      >
-        <CartesianGrid />
-        <XAxis type='number' dataKey='bedrooms' name='Number of Bedrooms' />
-        <YAxis type='number' dataKey='property_price' name='Price' />
-        <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-        <Scatter name='Properties' fill='#8884d8' />
-      </ScatterChart>
+      <ResponsiveContainer width='100%' height={400}>
+        <ScatterChart
+          data={scatterData}
+          margin={{
+            top: 20,
+            right: 20,
+            bottom: 20,
+            left: 20,
+          }}
+        >
+          <CartesianGrid />
+          <XAxis type='number' dataKey='bedrooms' name='Number of Bedrooms' />
+          <YAxis type='number' dataKey='property_price' name='Price' />
+          <Tooltip cursor={{ strokeDasharray: "3 3" }} />
+          <Scatter name='Properties' fill='#8884d8' />
+        </ScatterChart>
+      </ResponsiveContainer>
     </div>
   );
 };

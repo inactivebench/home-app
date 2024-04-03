@@ -22,14 +22,14 @@ const PercentageCard = () => {
   return (
     <div className='flex flex-col bg-amber-600 justify-around px-4 py-7 rounded-lg'>
       <div className='card-inner'>
-        <h3>Property Types Distribution</h3>
+        <h3 className='text-xl font-semibold'>Property Types Distribution</h3>
         <LuBadgePercent className='card_icon' />
       </div>
       <div className='flex justify-between'>
         {cardData.map((item) => {
-          const { property_type, percentage } = item;
+          const { property_type, percentage, index } = item;
           return (
-            <h1 className='text-white font-bold text-2xl'>
+            <h1 className='text-white font-bold text-2xl' key={index}>
               {property_type}: {percentage}
             </h1>
           );

@@ -23,22 +23,22 @@ const PropertyTable = () => {
         <thead>
           <tr>
             <th className='p-4 border-b border-blue-gray-100 bg-blue-gray-50'>
-              <p className=' font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70'>
+              <p className=' font-sans text-lg antialiased font-normal leading-none text-blue-gray-900 opacity-70'>
                 Location
               </p>
             </th>
             <th className='p-4 border-b border-blue-gray-100 bg-blue-gray-50'>
-              <p className=' font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70'>
+              <p className=' font-sans text-lg antialiased font-normal leading-none text-blue-gray-900 opacity-70'>
                 Rental Count
               </p>
             </th>
             <th className='p-4 border-b border-blue-gray-100 bg-blue-gray-50'>
-              <p className=' font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70'>
+              <p className=' font-sans text-lg antialiased font-normal leading-none text-blue-gray-900 opacity-70'>
                 Sale Count
               </p>
             </th>
             <th className='p-4 border-b border-blue-gray-100 bg-blue-gray-50'>
-              <p className=' font-sans text-sm antialiased font-normal leading-none text-blue-gray-900 opacity-70'>
+              <p className=' font-sans text-lg antialiased font-normal leading-none text-blue-gray-900 opacity-70'>
                 Total Count
               </p>
             </th>
@@ -47,7 +47,7 @@ const PropertyTable = () => {
         <tbody>
           {tableData.map((item, index) => (
             <tr key={index} className='even:bg-slate-200'>
-              <td className='p-4 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900'>
+              <td className='p-4 font-sans text-sm capitalize antialiased font-normal leading-normal text-blue-gray-900'>
                 {item.property_location}
               </td>
               <td className='p-4 font-sans text-sm antialiased font-normal leading-normal text-blue-gray-900'>

@@ -55,18 +55,18 @@ function Visualize() {
           </div>
         </div>
 
-        <div className='container grid grid-cols-5  grid-rows-3  gap-x-7 gap-y-9 max-w-[100%] w-[90%]  '>
-          <div className='col-span-3   '>
+        <div className='container grid grid-cols-1 grid-rows-5 lg:grid-cols-5  lg:grid-rows-3  gap-x-7 gap-y-9 max-w-[100%] w-[90%]  '>
+          <div className='lg:col-start-1 lg:col-span-3  '>
             <Chart />
           </div>
-          <div className='col-span-2'>
+          <div className='row-start-2 lg:col-start-4 lg:row-start-1 lg:col-span-2'>
             <Pie />
           </div>
-          <div className='row-start-2 col-span-full  '>
+          <div className='row-start-3 lg:row-start-2 col-span-full  '>
             <PropertyTable />
           </div>
 
-          <div className='row-start-3 col-span-2'>
+          <div className='row-start-4 lg:row-start-3 lg:col-span-2'>
             <ScatterPlot />
           </div>
         </div>

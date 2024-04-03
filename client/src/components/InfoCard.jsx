@@ -22,12 +22,17 @@ const InfoCard = () => {
   return (
     <div className='flex flex-col bg-blue-600 justify-around px-4 py-7 rounded-lg'>
       <div className='card-inner'>
-        <h3>Total Number of Property</h3>
+        <h3 className='text-xl font-semibold'>Total Number of Property</h3>
         <GiFamilyHouse className='card_icon' />
       </div>
-      <h1 className='text-white font-bold text-2xl'>
-        {cardData[0].total_properties}
-      </h1>
+      {cardData.map((item) => {
+        const { total_properties, index } = item;
+        return (
+          <h1 className='text-white font-bold text-2xl' key={index}>
+            {total_properties}
+          </h1>
+        );
+      })}
     </div>
   );
 };
