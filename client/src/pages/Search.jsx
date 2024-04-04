@@ -102,9 +102,15 @@ const Search = () => {
       setSidebardata({ ...sidebardata, maxPrice: e.target.value });
     }
     if (e.target.id === "order") {
-      setSidebardata({ ...sidebardata, type: e.target.value });
+      setSidebardata({ ...sidebardata, order: e.target.value });
     }
   };
+  const propertyData = useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+
+    return listings.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, listings]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -115,31 +121,25 @@ const Search = () => {
     urlParams.set("minPrice", sidebardata.minPrice);
     urlParams.set("maxPrice", sidebardata.maxPrice);
     urlParams.set("order", sidebardata.order);
+
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
   };
 
-  const propertyData = useMemo(() => {
-    const firstPageIndex = (currentPage - 1) * PageSize;
-    const lastPageIndex = firstPageIndex + PageSize;
-    return listings.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
   return (
     <div className='flex flex-col md:flex-row'>
       <div className='p-7  border-b-2 md:border-r-2 md:min-h-screen'>
         <form
           onSubmit={handleSubmit}
-          className='flex flex-col gap-8 text-black'
+          className='flex flex-col gap-8 text-black '
         >
           <div className='flex items-center gap-2'>
-            <label className='whitespace-nowrap font-semibold'>
-              Search Term:
-            </label>
+            <label className='whitespace-nowrap font-semibold'>Search:</label>
             <input
               type='text'
               id='searchTerm'
               placeholder='Enter a Location'
-              className='border rounded-lg p-3 w-full'
+              className='border rounded-lg p-4 w-full text-lg font-semibold'
               value={sidebardata.searchTerm}
               onChange={handleChange}
             />
@@ -148,7 +148,7 @@ const Search = () => {
             <label className='font-semibold'>Type:</label>
             <select
               id='type'
-              className='px-2 py-1 border rounded'
+              className='px-2 py-1 border rounded w-[42%]'
               onChange={handleChange}
             >
               <option value='all'>Rent & Sale</option>
@@ -158,7 +158,7 @@ const Search = () => {
 
             <select
               id='category'
-              className='px-2 py-1 border rounded'
+              className='px-2 py-1 border rounded w-[42%]'
               onChange={handleChange}
             >
               <option value='all'>All</option>
@@ -173,7 +173,7 @@ const Search = () => {
                 type='text'
                 id='minPrice'
                 placeholder='Min. Price'
-                className='border rounded-lg p-3 w-full'
+                className='border rounded-lg text-lg p-3 w-full'
                 value={sidebardata.minPrice}
                 onChange={handleChange}
               />
@@ -181,7 +181,7 @@ const Search = () => {
                 type='text'
                 id='maxPrice'
                 placeholder='Max. Price'
-                className='border rounded-lg p-3 w-full'
+                className='border rounded-lg p-3 text-lg w-full'
                 value={sidebardata.maxPrice}
                 onChange={handleChange}
               />
@@ -193,9 +193,10 @@ const Search = () => {
             className='border rounded-lg p-3'
           >
             <option value='DESC'>Price high to low</option>
-            <option value='ASC'>Price low to hight</option>
+            <option value='ASC'>Price low to high</option>
           </select>
-          <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95'>
+          {/* <button className='bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95'> */}
+          <button className=' text-slate-700 border-2 border-slate-700 p-3 rounded-lg uppercase font-semibold hover:bg-slate-700 hover:text-white'>
             Search
           </button>
         </form>
@@ -227,7 +228,7 @@ const Search = () => {
                     <img
                       className='h-[400px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300 rounded-md'
                       src={listing.property_image_url}
-                      alt='apartment image'
+                      alt='property image'
                     />
                   </div>
                   <div className='listing-info px-4'>

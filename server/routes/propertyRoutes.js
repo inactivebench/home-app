@@ -48,6 +48,7 @@ const getListings = async (req, res, next) => {
     } else {
       sql += ` AND property_price >= ${minPrice}`;
     }
+
     sql += ` ORDER BY property_price ${order}`;
 
     db.query(sql, (err, result) => {
