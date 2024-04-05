@@ -12,6 +12,11 @@ export default {
           xl: "5rem",
           "2xl": "6rem",
         },
+        fontFamily: {
+          serif: ['Merriweather", "serif'],
+          sans: ["Fira Sans", "sans-serif"],
+        },
+
         gridTemplateRows: {
           // Adds a variant for a grid with 3 rows where each row's size is set to auto
           3: "repeat(3, auto)",

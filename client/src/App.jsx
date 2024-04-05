@@ -6,6 +6,7 @@ import Signin from "./pages/Signin";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
 import Search from "./pages/Search";
+import Profile from "./pages/Profile";
 import Listing from "./pages/Listing";
 import Visualize from "./pages/Visualize";
 
@@ -20,6 +21,7 @@ const App = () => {
           <Route path='/' element={<Home />} />
           <Route path='signin' element={<Signin />} />
           <Route path='signup' element={<Signup />} />
+          <Route path='profile' element={<Profile />} />
           <Route path='search' element={<Search />} />
           <Route path='listing/:listingId' element={<Listing />} />
           <Route path='visualize' element={<Visualize />} />
