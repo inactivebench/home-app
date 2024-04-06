@@ -59,19 +59,16 @@ const Profile = () => {
   const handleDeleteUser = async () => {
     try {
       dispatch(deleteUserStart());
+      console.log(currentUser.result[0].customer_id);
       const res = await axios.delete(
-        `/api/users/delete/${currentUser.result.customer_id}`,
-        {
-          method: "DELETE",
-        }
+        `http://localhost:5000/api/users/delete/${currentUser.result[0].customer_id}`
       );
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(deleteUserFailure(data.message));
-        return;
-      }
-      dispatch(deleteUserSuccess(data));
-      navigate("/");
+      // const data = await res.json();
+      // if (data.success === false) {
+      //   dispatch(deleteUserFailure(data.message));
+      //   return;
+      // }
+      dispatch(deleteUserSuccess(navigate("/")));
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
     }

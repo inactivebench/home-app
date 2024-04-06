@@ -87,11 +87,11 @@ router.get("/signout", (req, res) => {
   }
 });
 
-router.get("/delete:id", (req, res) => {
+router.delete("/delete/:id", (req, res) => {
   let sql = `DELETE FROM customer WHERE customer_id = ${req.params.id}`;
   let query = db.query(sql, (err, result) => {
     if (err) {
-      throw err;
+      console.log(err);
     }
     console.log(result);
     res.send("user deleted... ");

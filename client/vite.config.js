@@ -17,8 +17,8 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/getusers/, ""),
       },
-      "/getuser/:id": "http://localhost:5000",
       "/api/users/signup": "http://localhost:5000",
+      "api/users/delete/:id": "http://localhost:5000",
     },
   },
 });
