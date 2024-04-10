@@ -37,7 +37,9 @@ const Chart = ({ data }) => {
 
   return (
     <div className='bg-white px-6 py-8 shadow-lg rounded-lg'>
-      <h1 className='text-center mb-4'>title</h1>
+      <h1 className='mb-4 font-sans text-2xl text-center antialiased font-normal leading-none text-blue-gray-900 opacity-70'>
+        Price Range Distribution for Rental Properties
+      </h1>
       <ResponsiveContainer width='100%' height={400}>
         <BarChart
           data={barData}

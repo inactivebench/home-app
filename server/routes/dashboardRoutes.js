@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
+const fs = require("fs");
+const csv = require("fast-csv");
+const { log } = require("console");
 
 //card one
 router.get("/card1", (req, res) => {
@@ -23,6 +26,18 @@ router.get("/card2", (req, res) => {
       throw err;
     }
     console.log("property number by property ");
+    res.send(result);
+  });
+});
+
+//card two
+router.get("/card3", (req, res) => {
+  let sql = " SELECT COUNT(*) AS customers FROM customer; ";
+  let query = db.query(sql, (err, result) => {
+    if (err) {
+      throw err;
+    }
+    console.log(`number or customers: ${result} `);
     res.send(result);
   });
 });
@@ -72,10 +87,27 @@ router.get("/table", (req, res) => {
     " SELECT property_location,SUM(CASE WHEN property_type = 'rent' THEN 1 ELSE 0 END) AS rental_count, SUM(CASE WHEN property_type = 'sale' THEN 1 ELSE 0 END) AS sale_count, COUNT(*) AS property_count FROM property  GROUP BY property_location ORDER BY property_count DESC LIMIT 10; ";
   let query = db.query(sql, (err, result) => {
     if (err) {
-      throw err;
+      console.log(err);
     }
     console.log("pie data  ");
     res.send(result);
   });
 });
+
+//write csv file
+router.get("/download", (req, res) => {
+  const sql = "SELECT * FROM property";
+  db.query(sql, (err, results) => {
+    if (err) {
+      console.error("Error executing MySQL query: " + err.stack);
+      return res.status(500).json({ error: "Error executing MySQL query" });
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "No data found" });
+    }
+    res.json(results);
+  });
+});
+
 module.exports = router;

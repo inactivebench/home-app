@@ -122,13 +122,3 @@ const sendData = (listing) => {
 };
 
 module.exports = propertyData;
-
-// save as json file
-// console.log(listing);
-
-// fs.writeFile("propertyData.json", JSON.stringify(listing), (err) => {
-//   if (err) {
-//     throw err;
-//   }
-//   console.log("filed saved successfully");
-// });

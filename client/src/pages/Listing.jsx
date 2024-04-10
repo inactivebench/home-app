@@ -4,6 +4,7 @@ import {
   faLocationDot,
   faBath,
   faBed,
+  faPhone,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
@@ -50,18 +51,28 @@ const Listing = () => {
             <p className='text-2xl font-semibold'>
               {listing[0].property_title} - Kshs{" "}
               {listing[0].property_price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-              {/* {listing.type === "rent" && " / month"} */}
             </p>
-            <p className='flex items-center mt-6 gap-2 text-slate-600  text-sm'>
-              <FontAwesomeIcon
-                icon={faLocationDot}
-                className='pr-2 text-green-700'
-              />
-              {listing[0].property_location}
-            </p>
+            <img
+              src={listing[0].property_image_url}
+              alt='property image'
+              className='rounded-md '
+            />
+            <div className='mt-6 flex justify-between'>
+              <p className='flex items-center  gap-2 text-slate-700 capitalize text-base'>
+                <FontAwesomeIcon
+                  icon={faLocationDot}
+                  className=' text-green-700'
+                />
+                {listing[0].property_location}
+              </p>
+              <p className='flex items-center  gap-2 text-slate-700  text-base'>
+                <FontAwesomeIcon icon={faPhone} className=' text-green-700' />+
+                {listing[0].property_owner_contact}
+              </p>
+            </div>
             <div className='flex gap-4'>
               <p className='bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                {listing[0].type === "rent" ? "For Rent" : "For Sale"}
+                {listing[0].property_type === "Rent" ? "For Rent" : "For Sale"}
               </p>
             </div>
             <p className='text-slate-800'>

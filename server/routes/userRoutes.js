@@ -98,6 +98,44 @@ router.delete("/delete/:id", (req, res) => {
   });
 });
 
+router.put("/update/:id", (req, res) => {
+  try {
+    const email = req.body.email || "";
+    const contact = parseInt(req.body.contact) || "";
+    const password = req.body.password || "";
+    const userId = req.params.id;
+
+    let sql = `UPDATE customer SET`;
+
+    if (email !== "") {
+      sql += ` customer_email = '${email}',`;
+    }
+
+    if (contact !== "") {
+      sql += ` phone_number = '${contact}',`;
+    }
+
+    if (password !== "") {
+      sql += ` password = '${password}',`;
+    }
+
+    // Remove trailing comma
+    sql = sql.replace(/,$/, "");
+
+    sql += ` WHERE customer_id = ${userId}`;
+
+    db.query(sql, (err, result) => {
+      if (err) {
+        throw err;
+      }
+      console.log("user updated");
+      res.status(200).send(result);
+    });
+  } catch (error) {
+    throw error;
+  }
+});
+
 // check user authentication
 router.get("/isUserAuth", verifyJWT, (req, res) => {
   res.send("You are authenticated Congrats:");

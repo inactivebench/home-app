@@ -18,7 +18,10 @@ const PropertyTable = () => {
     fetchdata();
   }, []);
   return (
-    <div className=' text-black  bg-white shadow-md bg-clip-border rounded-xl mb-8'>
+    <div className=' text-black  bg-white shadow-md bg-clip-border rounded-xl '>
+      <h1 className='p-4 font-sans text-2xl text-center antialiased font-normal leading-none text-blue-gray-900 opacity-70'>
+        Property Counts by Rental and Sale Type
+      </h1>
       <table className='w-full text-left table-auto min-w-max'>
         <thead>
           <tr>

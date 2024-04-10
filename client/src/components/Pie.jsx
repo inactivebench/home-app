@@ -19,7 +19,9 @@ const PieCategory = () => {
   }, []);
   return (
     <div className='bg-white px-6 py-8 shadow-lg rounded-lg  '>
-      <h1 className='text-center mb-4'>Pie</h1>
+      <h1 className=' mb-4 font-sans text-2xl text-center antialiased font-normal leading-none text-blue-gray-900 opacity-70'>
+        Distribution of Property Categories
+      </h1>
       <PieChart width={400} height={400}>
         <Pie
           data={pieData}

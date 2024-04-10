@@ -1,14 +1,11 @@
 import React from "react";
 import {
-  BsCart3,
   BsGrid1X2Fill,
-  BsFillArchiveFill,
   BsFillGrid3X3GapFill,
-  BsPeopleFill,
-  BsListCheck,
   BsMenuButtonWideFill,
-  BsFillGearFill,
 } from "react-icons/bs";
+import { FaChartLine } from "react-icons/fa";
+import { ImDownload } from "react-icons/im";
 
 function Sidebar({ openSidebarToggle, OpenSidebar }) {
   return (
@@ -18,7 +15,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
     >
       <div className='sidebar-title'>
         <div className='sidebar-brand'>
-          <BsCart3 className='icon_header' /> SHOP
+          <FaChartLine className='icon_header h-12 w-12' />
         </div>
         <span className='icon close_icon' onClick={OpenSidebar}>
           X
@@ -33,22 +30,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         </li>
         <li className='sidebar-list-item'>
           <a href=''>
-            <BsFillArchiveFill className='icon' /> Products
-          </a>
-        </li>
-        <li className='sidebar-list-item'>
-          <a href=''>
             <BsFillGrid3X3GapFill className='icon' /> Categories
-          </a>
-        </li>
-        <li className='sidebar-list-item'>
-          <a href=''>
-            <BsPeopleFill className='icon' /> Customers
-          </a>
-        </li>
-        <li className='sidebar-list-item'>
-          <a href=''>
-            <BsListCheck className='icon' /> Inventory
           </a>
         </li>
         <li className='sidebar-list-item'>
@@ -58,7 +40,7 @@ function Sidebar({ openSidebarToggle, OpenSidebar }) {
         </li>
         <li className='sidebar-list-item'>
           <a href=''>
-            <BsFillGearFill className='icon' /> Setting
+            <ImDownload className='icon' /> Download
           </a>
         </li>
       </ul>

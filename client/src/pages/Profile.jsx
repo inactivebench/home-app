@@ -2,11 +2,17 @@ import { useSelector } from "react-redux";
 import { useRef, useState, useEffect } from "react";
 import { CgProfile } from "react-icons/cg";
 import profile from "../assets/user.png";
+import {
+  faCheck,
+  faTimes,
+  faInfoCircle,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {
-  // updateUserStart,
-  // updateUserSuccess,
-  // updateUserFailure,
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
@@ -18,8 +24,16 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+const CONTACT_REGEX = /^\d{1,10}$/;
+const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
 const Profile = () => {
-  const fileRef = useRef(null);
+  const errRef = useRef();
+  const successRef = useRef();
+
+  const [pwd, setPwd] = useState("");
+
   const { currentUser, loading, error } = useSelector((state) => state.user);
 
   const [formData, setFormData] = useState({});
@@ -36,21 +50,18 @@ const Profile = () => {
     e.preventDefault();
     try {
       dispatch(updateUserStart());
-      const res = await fetch(`/api/user/update/${currentUser._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-      const data = await res.json();
-      if (data.success === false) {
-        dispatch(updateUserFailure(data.message));
-        return;
-      }
+      const res = await axios.put(
+        `http://localhost:5000/api/users/update/${currentUser.result[0].customer_id}`,
+        JSON.stringify(formData),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
 
-      dispatch(updateUserSuccess(data));
+      dispatch(updateUserSuccess(res.data));
       setUpdateSuccess(true);
+      setFormData("");
     } catch (error) {
       dispatch(updateUserFailure(error.message));
     }
@@ -63,11 +74,6 @@ const Profile = () => {
       const res = await axios.delete(
         `http://localhost:5000/api/users/delete/${currentUser.result[0].customer_id}`
       );
-      // const data = await res.json();
-      // if (data.success === false) {
-      //   dispatch(deleteUserFailure(data.message));
-      //   return;
-      // }
       dispatch(deleteUserSuccess(navigate("/")));
     } catch (error) {
       dispatch(deleteUserFailure(error.message));
@@ -89,36 +95,68 @@ const Profile = () => {
       <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <img
-          onClick={() => fileRef.current.click()}
           src={profile}
           alt='profile'
           className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'
         />
-        <p className='text-sm self-center'></p>
-
+        {formData === "" && pwd === "" ? (
+          ""
+        ) : (
+          <>
+            <p
+              ref={errRef}
+              className={
+                error
+                  ? "text-red-700 bg-red-400 font-bold p-2 mb-2"
+                  : "offscreen"
+              }
+              aria-live='assertive'
+            >
+              {error}
+            </p>
+            <p
+              ref={successRef}
+              className={
+                updateSuccess
+                  ? "text-green-700 bg-green-400 font-bold p-2 mb-2 "
+                  : "offscreen"
+              }
+              aria-live='assertive'
+            >
+              User is updated successfully!
+            </p>
+          </>
+        )}
+        {/* email  */}
         <input
           type='email'
           placeholder='email'
           id='email'
           defaultValue={currentUser.customer_email}
-          className='border p-3 rounded-lg'
+          className='border p-3 rounded-lg text-black'
           onChange={handleChange}
         />
+
+        {/* contact  */}
+
         <input
           type='contact'
           placeholder='contact'
           id='contact'
           defaultValue={currentUser.contact}
-          className='border p-3 rounded-lg'
+          className='border p-3 rounded-lg text-black'
           onChange={handleChange}
         />
+        {/* new password  */}
+
         <input
           type='password'
-          placeholder='password'
+          placeholder='New password'
           onChange={handleChange}
           id='password'
-          className='border p-3 rounded-lg'
+          className='border py-3 px-2 rounded-lg text-black'
         />
+
         <button
           disabled={loading}
           className='bg-slate-700 text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'
@@ -137,11 +175,6 @@ const Profile = () => {
           Sign out
         </span>
       </div>
-
-      <p className='text-red-700 mt-5'>{error ? error : ""}</p>
-      <p className='text-green-700 mt-5'>
-        {updateSuccess ? "User is updated successfully!" : ""}
-      </p>
     </div>
   );
 };

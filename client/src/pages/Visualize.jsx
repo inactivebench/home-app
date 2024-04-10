@@ -2,57 +2,52 @@ import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Chart from "../components/Chart";
 import Pie from "../components/Pie";
-import {
-  BsFillArchiveFill,
-  BsFillGrid3X3GapFill,
-  BsPeopleFill,
-  BsFillBellFill,
-} from "react-icons/bs";
-import {
-  BarChart,
-  Bar,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  LineChart,
-  Line,
-} from "recharts";
+import { FaRegFileAlt } from "react-icons/fa";
+import { CSVLink } from "react-csv";
 import PropertyTable from "../components/PropertyTable";
 import ScatterPlot from "../components/ScatterPlot";
 import InfoCard from "../components/InfoCard";
 import PercentageCard from "../components/PercentageCard";
+import axios from "axios";
+import CustomerCard from "../components/CustomerCard";
 
 function Visualize() {
-  const [openSidebarToggle, setOpenSidebarToggle] = useState(false);
+  const [propertyData, setPropertyData] = useState([]);
 
-  const OpenSidebar = () => {
-    setOpenSidebarToggle(!openSidebarToggle);
+  const handleDownload = async () => {
+    console.log("button clicked");
+    try {
+      const response = await axios.get(
+        `http://localhost:5000/api/dashboard/download`
+      );
+      setPropertyData(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <main className='pb-6 bg-slate-100 flex flex-col md:flex-row'>
       <div className='sidebar'>
-        ``
         <Sidebar />
       </div>
       <div className=' flex flex-col items-center w-full'>
-        <div className=' font-bold text-xl text-black'>
+        <div className='container w-full font-bold text-xl text-black flex items-center justify-between pt-4 '>
           <h3>DASHBOARD</h3>
+          <CSVLink data={propertyData} filename={"property_data.csv"}>
+            <button
+              className='px-5 py-2 bg-blue-300 text-blue-950 flex items-center '
+              onClick={handleDownload}
+            >
+              <FaRegFileAlt className='h-5 w-5' />
+              <span className='text-lg font-bold'>Export To CSV</span>
+            </button>
+          </CSVLink>
         </div>
 
         <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-3 2xl:gap-7.5 max-w-[100%] w-[80%] h-[80%] mb-8 '>
           <InfoCard />
           <PercentageCard />
-          <div className='flex flex-col bg-emerald-600 justify-around px-4 py-7 rounded-lg'>
-            <div className='card-inner'>
-              <h3>CUSTOMERS</h3>
-              <BsPeopleFill className='card_icon' />
-            </div>
-            <h1>33</h1>
-          </div>
+          <CustomerCard />
         </div>
 
         <div className='container grid grid-cols-1 grid-rows-5 lg:grid-cols-5  lg:grid-rows-3  gap-x-7 gap-y-9 max-w-[100%] w-[90%]  '>
@@ -66,7 +61,7 @@ function Visualize() {
             <PropertyTable />
           </div>
 
-          <div className='row-start-4 lg:row-start-3 lg:col-span-2'>
+          <div className='row-start-4 lg:row-start-3 lg:col-span-3'>
             <ScatterPlot />
           </div>
         </div>
