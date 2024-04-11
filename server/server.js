@@ -52,8 +52,11 @@ app.use("/api/dashboard", require("./routes/dashboardRoutes"));
 // rental property
 const testUrl =
   "https://www.privatepropertykenya.com/apartment-for-rent?search=Nairobi&bedroom=&min_price=&max_price=&button=&page=13";
+const testUrl2 =
+  "https://www.privatepropertykenya.com/house-for-sale/nairobi-west?search=Nairobi&auto=&bedroom=&min_price=&max_price=&button=";
 
 // propertyData(testUrl);
+// propertyData(testUrl2);
 
 // test
 

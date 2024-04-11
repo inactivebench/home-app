@@ -98,10 +98,10 @@ const sendData = (listing) => {
   for (let i = 0; i < listing.length; i++) {
     let property = {
       property_title: listing[i].title,
-      property_type: "Rent",
-      // property_type: "Sale",
-      property_category: "Apartment",
-      // property_category: "House",
+      // property_type: "Rent",
+      property_type: "Sale",
+      // property_category: "Apartment",
+      property_category: "House",
       property_location: listing[i].location,
       property_image_url: listing[i].imgUrl,
       property_price: listing[i].price,

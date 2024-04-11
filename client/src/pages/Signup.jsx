@@ -5,7 +5,7 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import logo from "../assets/home_bnw.svg";
 
@@ -45,6 +45,7 @@ const Signup = () => {
 
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     firstNameRef.current.focus();
@@ -118,14 +119,9 @@ const Signup = () => {
   return (
     <>
       {success ? (
-        <section>
-          <h1>Success!</h1>
-          <p>
-            <Link to='/signin' className='link'>
-              Sign In
-            </Link>
-          </p>
-        </section>
+        setTimeout(() => {
+          navigate("/signin");
+        }, 1000)
       ) : (
         <div className='flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>
           <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
