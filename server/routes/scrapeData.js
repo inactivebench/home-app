@@ -114,7 +114,7 @@ const sendData = (listing) => {
     let sql = " INSERT INTO property SET ? ";
     let query = db.query(sql, property, (err, result) => {
       if (err) {
-        throw err;
+        console.log(err);
       }
       console.log("property data submitted ");
     });
